@@ -23,20 +23,21 @@ footer{margin-top:28px;color:var(--mut);font-size:14px}
 
 <section id="pt">
 <h1>Triagem (Screening) para PubMed – INTERPRETE</h1>
-<p class="sub">Política de privacidade · Atualizada em 06/11/2026</p>
+<p class="sub">Política de privacidade · Atualizada em 11/11/2026</p>
 <div class="card">
 <h2>Resumo</h2>
 <p>A extensão não coleta, não vende e não compartilha dados pessoais. Não há conta, cadastro, anúncios nem rastreamento. Ela não envia nada para servidores do autor: não existe servidor do autor.</p>
 
 <h2>O que a extensão faz</h2>
-<p>Ela atua somente em páginas de resultados do PubMed (<code>pubmed.ncbi.nlm.nih.gov</code>). Organiza os artigos por nível de evidência e mostra dados lidos do próprio registro do artigo, usando regras fixas e visíveis.</p>
+<p>Ela atua somente em páginas do PubMed (<code>pubmed.ncbi.nlm.nih.gov</code>): resultados de busca e a página de cada artigo. Organiza os artigos por nível de evidência e mostra dados lidos do próprio registro do artigo, usando regras fixas e visíveis.</p>
 
 <h2>Dados que ficam no seu navegador</h2>
 <ul>
 <li>Suas configurações, suas decisões de triagem (incluir, talvez, excluir) e preferências de leitura.</li>
+<li>Suas pastas de artigos salvos, suas buscas salvas e o rascunho da busca em andamento (inclusive o texto que você cola da resposta do GPT).</li>
 <li>Um cache de contagens de citações, para não repetir consultas.</li>
 </ul>
-<p>Tudo isso é guardado localmente com <code>chrome.storage</code> e não sai do seu computador. Você pode apagar removendo a extensão ou restaurando os padrões nas Opções.</p>
+<p>Tudo isso é guardado localmente com <code>chrome.storage</code> e não sai do seu computador. Você pode apagar tudo removendo a extensão. O botão “Restaurar padrões”, nas Opções, apaga apenas as configurações. Pastas, buscas salvas e decisões são apagadas ao excluí-las na própria extensão ou ao removê-la.</p>
 
 <h2>Serviços de terceiros consultados</h2>
 <p>Para funcionar, a extensão consulta serviços públicos de instituições de saúde dos EUA:</p>
@@ -46,6 +47,8 @@ footer{margin-top:28px;color:var(--mut);font-size:14px}
 </ul>
 <p>Essas consultas seguem as políticas de privacidade do NCBI/NIH. A extensão não envia a esses serviços seu nome, e-mail ou qualquer dado de conta.</p>
 
+<h2>Prompt para o GPT</h2>
+<p>A extensão apenas copia um texto-modelo (prompt) para a área de transferência quando você pede. Ela não se conecta a nenhum serviço de IA: quem usa o GPT é você, no site dele, e o que você cola de volta fica só no seu navegador.</p>
 <h2>Tradução do resumo</h2>
 <p>A tradução opcional usa a API de tradução do próprio Chrome, que roda no seu navegador. O texto não é enviado ao autor da extensão.</p>
 
@@ -59,7 +62,7 @@ footer{margin-top:28px;color:var(--mut);font-size:14px}
 <ul>
 <li><code>storage</code>: guardar configurações, decisões e cache localmente.</li>
 <li>Acesso a <code>eutils.ncbi.nlm.nih.gov</code> e <code>icite.od.nih.gov</code>: consultar os dados dos artigos descritos acima.</li>
-<li>Execução em <code>pubmed.ncbi.nlm.nih.gov</code>: mostrar a triagem na página de resultados.</li>
+<li>Execução em <code>pubmed.ncbi.nlm.nih.gov</code>: mostrar a triagem nas páginas de resultados e de artigo.</li>
 </ul>
 
 <h2>Aviso</h2>
@@ -72,20 +75,21 @@ footer{margin-top:28px;color:var(--mut);font-size:14px}
 
 <section id="en" style="margin-top:64px">
 <h1>Screening for PubMed – INTERPRETE</h1>
-<p class="sub">Privacy policy · Updated November 6, 2026</p>
+<p class="sub">Privacy policy · Updated November 11, 2026</p>
 <div class="card">
 <h2>Summary</h2>
 <p>This extension does not collect, sell or share personal data. There is no account, sign-up, advertising or tracking, and nothing is sent to any server operated by the author — there is no such server.</p>
 
 <h2>What it does</h2>
-<p>It runs only on PubMed results pages (<code>pubmed.ncbi.nlm.nih.gov</code>). It organizes articles by level of evidence and shows information read from each article's own record, using fixed, visible rules.</p>
+<p>It runs only on PubMed pages (<code>pubmed.ncbi.nlm.nih.gov</code>): search results and each article's page. It organizes articles by level of evidence and shows information read from each article's own record, using fixed, visible rules.</p>
 
 <h2>Data stored in your browser</h2>
 <ul>
 <li>Your settings, your screening decisions (include, maybe, exclude) and reading preferences.</li>
+<li>Your folders of saved articles, your saved searches and the draft of the search in progress (including the text you paste from the GPT answer).</li>
 <li>A cache of citation counts, to avoid repeating requests.</li>
 </ul>
-<p>This is stored locally with <code>chrome.storage</code> and never leaves your computer. You can erase it by removing the extension or restoring defaults in Options.</p>
+<p>This is stored locally with <code>chrome.storage</code> and never leaves your computer. You can erase everything by removing the extension. The “Restore defaults” button in Options erases only the settings. Folders, saved searches and decisions are erased by deleting them in the extension itself or by removing it.</p>
 
 <h2>Third-party services contacted</h2>
 <p>To work, the extension queries public services run by US health institutions:</p>
@@ -95,6 +99,8 @@ footer{margin-top:28px;color:var(--mut);font-size:14px}
 </ul>
 <p>These requests are governed by the privacy policies of NCBI/NIH. The extension does not send your name, email or any account data to them.</p>
 
+<h2>Prompt for GPT</h2>
+<p>The extension only copies a template text (prompt) to your clipboard when you ask. It does not connect to any AI service: you use GPT yourself, on its own site, and what you paste back stays in your browser only.</p>
 <h2>Abstract translation</h2>
 <p>Optional translation uses Chrome's built-in Translator API, which runs in your browser. The text is not sent to the extension's author.</p>
 
@@ -108,7 +114,7 @@ footer{margin-top:28px;color:var(--mut);font-size:14px}
 <ul>
 <li><code>storage</code>: keep settings, decisions and cache locally.</li>
 <li>Access to <code>eutils.ncbi.nlm.nih.gov</code> and <code>icite.od.nih.gov</code>: fetch the article data described above.</li>
-<li>Running on <code>pubmed.ncbi.nlm.nih.gov</code>: display the triage on the results page.</li>
+<li>Running on <code>pubmed.ncbi.nlm.nih.gov</code>: display the triage on results and article pages.</li>
 </ul>
 
 <h2>Disclaimer</h2>
