@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avaliação rápida de revisão sistemática</title>
+<style>
+:root{--am:#4A0F3A;--vi:#7A1236;--mg:#D6125A;--ci:#F3ECEA;--tx:#2A2326;--mu:#8A6F7B;--ln:#E2D4D9;--vd:#2E8A5E;--am2:#B7791F}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ci);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-weight:500;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:28px 20px 60px}
+.kick{font-weight:800;font-size:13px;letter-spacing:.18em;color:var(--mg);text-transform:uppercase}
+h1{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:700;color:var(--am);font-size:clamp(30px,6vw,42px);line-height:1.1;margin:6px 0 8px}
+h1 em{font-style:italic;font-weight:600;color:var(--mg)}
+.lead{color:var(--vi);font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-style:italic;font-weight:600;font-size:19px;margin:0 0 22px}
+.bar{display:flex;gap:4px;margin:0 0 18px}
+.bar span{flex:1;height:6px;border-radius:3px;background:var(--ln)}
+.bar span.done{background:var(--vi)}.bar span.cur{background:var(--mg)}
+.card{background:#fff;border-radius:22px;padding:26px 24px;box-shadow:0 8px 24px rgba(74,15,58,.08)}
+.tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;background:var(--am);color:#fff;margin-bottom:12px}
+.tag.ap{background:var(--mg)}.tag.al{background:var(--am2)}
+h2{font-size:23px;font-weight:800;margin:0 0 6px;color:var(--tx);line-height:1.3}
+.why{color:var(--mu);font-weight:600;margin:0 0 16px;font-size:15.5px}
+details{border:1.5px solid var(--ln);border-radius:14px;margin:0 0 10px;background:#FBF7F5}
+summary{cursor:pointer;padding:11px 14px;font-weight:800;font-size:14.5px;color:var(--vi);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+ ";color:var(--mg)}details[open] summary::before{content:"– "}
+details .in{padding:0 16px 12px;font-size:14.5px}
+details ul{margin:4px 0 8px;padding-left:20px}details li{margin:2px 0}
+details b{color:var(--am)}
+.dica{background:#F7EEF2;border-left:5px solid var(--mg);border-radius:10px;padding:11px 14px;font-size:14.5px;margin:0 0 12px}
+.dica b{color:var(--am)}
+.opts{display:grid;gap:10px;margin-top:18px}
+.opt{display:flex;align-items:center;gap:12px;border:2px solid var(--ln);border-radius:14px;padding:13px 16px;background:#fff;cursor:pointer;font:inherit;font-weight:700;font-size:16px;color:var(--tx);text-align:left;transition:.15s;width:100%}
+.opt:hover{border-color:var(--mg)}
+.opt .dot{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--mu);flex:none}
+.opt.sel{border-color:var(--am);background:#F7EEF2}.opt.sel .dot{border-color:var(--am);background:var(--am);box-shadow:inset 0 0 0 3px #fff}
+.opt small{display:block;font-weight:600;color:var(--mu);font-size:13px}
+.grp{margin-top:16px}
+.grp h4{margin:0 0 8px;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--vi)}
+.grp h4 span{font-weight:600;letter-spacing:0;text-transform:none;color:var(--mu)}
+.chk{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--ln);border-radius:12px;padding:11px 14px;background:#fff;cursor:pointer;font:inherit;font-weight:600;font-size:15px;color:var(--tx);text-align:left;width:100%;margin-bottom:8px;transition:.15s}
+.chk:hover{border-color:var(--mg)}
+.chk .box{width:20px;height:20px;border-radius:6px;border:2.5px solid var(--mu);flex:none;margin-top:1px;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800}
+.chk.on{border-color:var(--am);background:#F7EEF2}.chk.on .box{background:var(--am);border-color:var(--am)}
+.chk small{display:block;color:var(--mu);font-weight:600;font-size:13px;margin-top:2px}
+.chk.al.on{border-color:var(--am2);background:#FFF6E8}.chk.al.on .box{background:var(--am2);border-color:var(--am2)}
+.calc{display:flex;align-items:center;gap:10px;margin-top:14px;padding:12px 14px;border-radius:12px;background:#FBF7F5;font-weight:700;font-size:15px}
+.nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:22px}
+.nav span{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:800;font-size:15px;border:none;border-radius:30px;padding:12px 24px;cursor:pointer}
+.btn.pri{background:var(--am);color:#fff}.btn.pri:disabled{opacity:.35;cursor:default}
+.btn.sec{background:transparent;color:var(--vi);border:2px solid var(--ln)}
+.note{font-size:13.5px;color:var(--mu);margin-top:14px}
+.warn{background:#FFF4E5;border-left:5px solid var(--am2);border-radius:10px;padding:12px 14px;font-size:14.5px;margin-top:14px}
+input[type=text]{width:100%;font:inherit;font-size:16px;padding:12px 14px;border:2px solid var(--ln);border-radius:12px;margin-top:6px;background:#fff}
+input[type=text]:focus{outline:none;border-color:var(--mg)}
+label.lb{font-weight:800;font-size:14px;color:var(--vi);display:block;margin-top:16px}
+label.lb:first-of-type{margin-top:0}
+.res{border-radius:18px;padding:20px;color:#fff;margin-bottom:18px}
+.res .k{font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.res .v{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:32px;font-weight:700;line-height:1.15;margin:4px 0 6px}
+.res p{margin:0;font-size:15px;opacity:.95}
+.lst{list-style:none;padding:0;margin:0}
+.lst li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--ln);font-size:15px}
+.lst li:last-child{border:none}
+.pill{flex:none;font-size:12px;font-weight:800;padding:3px 10px;border-radius:12px;min-width:104px;text-align:center}
+.p-sim{background:#E3F1E8;color:var(--vd)}.p-par{background:#FFF1D6;color:#8A5A12}.p-nao{background:#FBE3EC;color:var(--mg)}.p-na{background:#EEE7EA;color:var(--mu)}
+h3{font-size:14px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--vi);margin:22px 0 6px}
+.foot{font-size:12.5px;color:var(--mu);margin-top:26px}
+.foot a{color:var(--vi)}
+.copied{color:var(--vd);font-weight:800;font-size:14px}
+.sub{border-top:1.5px dashed var(--ln);margin-top:18px;padding-top:6px}
+.sub h4{margin:12px 0 6px;font-size:15.5px;font-weight:800;color:var(--tx)}
+.sub .opts{margin-top:8px}
+.vis{display:grid;gap:12px;margin:8px 0 4px}
+.ex{border:1.5px solid var(--ln);border-radius:14px;padding:12px 14px;background:#fff}
+.ex .tt{font-weight:800;font-size:14px;margin-bottom:8px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.ex .tt span{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:10px}
+.ok{background:#E3F1E8;color:var(--vd)}.bad{background:#FBE3EC;color:var(--mg)}
+.row{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:6px;align-items:center;font-size:13.5px;margin:4px 0}
+.row .lb2{font-weight:700;color:var(--am)}
+.chipg{border-radius:8px;padding:5px 8px;text-align:center;font-weight:700;font-size:12.5px;background:#F2E4EA;color:var(--vi)}
+.chipg.pl{background:#EEE7EA;color:var(--mu)}
+.chipg.rep{background:#fff;border:2px dashed var(--mg);color:var(--mg)}
+.cnt{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:13.5px;font-weight:700}
+.cnt b{font-weight:800}.cnt .f{color:var(--mg)}.cnt .r{color:var(--vd)}
+.lg{font-size:12.5px;color:var(--mu);margin-top:6px}
+.inv{border:2px solid var(--mg);background:#FFF8FB;margin-top:16px}
+.inv>summary{color:var(--mg)}
+.inv>summary::before{content:"🔍 "}.inv[open]>summary::before{content:"🔍 "}
+.inv .in{padding-top:2px}
+.iq{margin:12px 0 4px;font-weight:800;font-size:15px}
+.iq small{display:block;font-weight:600;color:var(--mu);font-size:13px;margin-top:2px}
+.mini{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.mini button{font:inherit;font-weight:700;font-size:14px;border:2px solid var(--ln);background:#fff;border-radius:20px;padding:6px 14px;cursor:pointer;color:var(--tx)}
+.mini button.sel{border-color:var(--am);background:var(--am);color:#fff}
+.flag{background:#FFF4E5;border-left:4px solid var(--am2);border-radius:8px;padding:9px 12px;font-size:14px;margin-top:8px}
+.calcx{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.calcx label{font-size:13px;font-weight:800;color:var(--vi)}
+.calcx input{width:100%;font:inherit;font-size:16px;padding:9px 12px;border:2px solid var(--ln);border-radius:10px;margin-top:4px}
+.out{margin-top:10px;padding:12px 14px;border-radius:12px;background:#fff;border:1.5px solid var(--ln);font-size:15px}
+.out b{color:var(--am);font-size:20px}
+.tabs{display:flex;background:#fff;border-radius:30px;padding:5px;gap:4px;margin:0 0 18px;box-shadow:0 4px 14px rgba(74,15,58,.06)}
+.tabs button{flex:1;font:inherit;font-weight:800;font-size:15px;border:none;border-radius:24px;padding:10px;background:transparent;color:var(--vi);cursor:pointer}
+.tabs button.on{background:var(--am);color:#fff}
+.qi{padding:16px 0;border-bottom:1.5px solid var(--ln)}
+.qi:last-of-type{border-bottom:none}
+.qh{display:flex;gap:10px;align-items:flex-start}
+.qn{flex:none;width:28px;height:28px;border-radius:50%;background:var(--am);color:#fff;font-weight:800;font-size:14px;display:grid;place-items:center;margin-top:1px}
+.qt{font-weight:800;font-size:16.5px;line-height:1.35}
+.qo{font-size:13px;color:var(--mu);font-weight:600;margin-top:2px}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0 38px}
+.seg button{font:inherit;font-weight:700;font-size:14px;border:2px solid var(--ln);background:#fff;border-radius:20px;padding:6px 13px;cursor:pointer;color:var(--tx)}
+.seg button.s-sim{background:var(--vd);border-color:var(--vd);color:#fff}
+.seg button.s-nao,.seg button.s-ne{background:var(--mg);border-color:var(--mg);color:#fff}
+.seg button.s-na,.seg button.s-inc{background:var(--mu);border-color:var(--mu);color:#fff}
+.flg{margin:12px 0 0 38px;background:#FFFAF1;border:1.5px solid #F0DDBE;border-radius:12px;padding:10px 12px 6px}
+.flg .fl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8A5A12;margin-bottom:8px}
+.flg .fl span{font-weight:600;letter-spacing:0;text-transform:none;color:var(--mu)}
+.flg button{display:flex;align-items:flex-start;gap:10px;width:100%;font:inherit;font-weight:600;font-size:14px;border:none;background:transparent;padding:5px 0;margin:0 0 4px;cursor:pointer;color:var(--tx);text-align:left}
+.flg button .bx{flex:none;width:19px;height:19px;border-radius:5px;border:2.5px solid #C9A46A;background:#fff;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;margin-top:1px}
+.flg button.on{color:#7A4E10;font-weight:700}
+.flg button.on .bx{background:var(--am2);border-color:var(--am2)}
+.qres{margin-top:18px}
+.sec{margin-top:14px}
+.sect{font-size:14px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--vi);border-radius:10px;padding:8px 12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.sect{width:100%;border:none;cursor:pointer;font-family:inherit;align-items:center;text-align:left}
+.sect .sl{display:flex;align-items:center;gap:8px}
+.sect .chev{font-size:13px;width:12px}
+.sect .sr{font-weight:600;letter-spacing:0;text-transform:none;opacity:.9;font-size:12.5px;display:flex;gap:8px;align-items:center}
+.sect .sp{background:var(--mg);color:#fff;border-radius:10px;padding:1px 8px;font-weight:800;white-space:nowrap}
+.sec.col .secb{display:none}
+.colall{display:flex;justify-content:flex-end;margin-top:6px}
+.colall button{font:inherit;font-size:13px;font-weight:800;color:var(--vi);background:transparent;border:1.5px solid var(--ln);border-radius:16px;padding:4px 12px;cursor:pointer}
+.qn.cr{background:var(--mg)}
+.star{color:var(--mg)}
+.seg button.s3-ok{background:var(--vd);border-color:var(--vd);color:#fff}
+.seg button.s3-pb{background:var(--mg);border-color:var(--mg);color:#fff}
+.seg button.s3-na{background:var(--am2);border-color:var(--am2);color:#fff}
+.seg button.s3-sa{background:var(--mu);border-color:var(--mu);color:#fff}
+.seg button.s3-ns{background:var(--mu);border-color:var(--mu);color:#fff}
+details.ex2{border:none;background:transparent;margin:4px 0 0 38px}
+details.ex2>summary{padding:2px 0;font-size:13.5px}
+details.ex2>summary::before{content:"? ";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--vi);color:#fff;font-size:12px;margin-right:6px}
+details.ex2[open]>summary::before{content:"? "}
+details.ex2 .in{background:#FBF7F5;border-radius:10px;padding:10px 12px;font-size:14px}
+details.ind{margin:10px 0 0 38px}
+.qnao{font-size:13.5px;margin-top:6px;background:#FBEAF0;border-radius:8px;padding:6px 10px;color:#5E1030;font-weight:600}
+.qnao b{color:var(--mg);font-weight:800}
+.flg.ft{background:#F6F1F3;border-color:var(--ln)}
+.flg.ft .fl{color:var(--vi)}
+.flg.ft button .bx{border-color:var(--mu)}
+.flg.ft button.on{color:var(--am)}.flg.ft button.on .bx{background:var(--vi);border-color:var(--vi)}
+.seg button.s-par{background:var(--am2);border-color:var(--am2);color:#fff}
+.robfig{margin:10px 0 0;overflow-x:auto}
+table.robg{border-collapse:collapse;font-size:12px;margin:0 auto}
+table.robg th{font-weight:800;color:var(--am);padding:4px 5px;white-space:nowrap}
+table.robg td{text-align:center;padding:3px 5px;border-top:1px solid var(--ln)}
+table.robg td span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;color:#fff;font-weight:800;font-size:14px}
+table.robg tr.gr td,table.robg tr.gr th{border-top:2px solid var(--am)}
+.robl{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mu);margin-top:8px;justify-content:center}
+.robl i{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:50%;color:#fff;font-style:normal;font-weight:800;font-size:11px;margin-right:4px}
+details.rob{margin-top:10px;background:#fff}
+details.rob.ind{margin-left:0}
+details.rob .in{padding:0 10px 10px}
+table.robt{border-collapse:collapse;font-size:13px;width:100%}
+table.robt th{text-align:left;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--vi);padding:6px;border-bottom:2px solid var(--ln)}
+table.robt td{vertical-align:top;padding:7px 6px;border-bottom:1px solid var(--ln)}
+.robc{border-left:4px solid var(--vi);background:#FBF7F5;border-radius:8px;padding:8px 10px;margin:8px 0;font-size:13.5px}
+.robc .rt{font-weight:800;color:var(--am);margin-bottom:3px}
+.robc b{color:var(--vi)}
+.robc .rq{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin-top:2px}
+.robc ul{margin:3px 0 6px;padding-left:18px}.robc li{margin:2px 0}
+.kc label{display:block;font-size:12.5px;font-weight:800;color:var(--vi);margin:10px 0 4px}
+.kc input{width:100%;font:inherit;font-size:15px;padding:8px 10px;border:2px solid var(--ln);border-radius:10px;background:#fff}
+.kq{font-weight:800;font-size:14.5px;margin:4px 0 8px}
+.kb{display:flex;flex-wrap:wrap;gap:6px}
+.kb button{font:inherit;font-weight:700;font-size:13.5px;border:2px solid var(--ln);background:#fff;border-radius:18px;padding:6px 12px;cursor:pointer;color:var(--tx)}
+.kb button.on{background:var(--am);border-color:var(--am);color:#fff}
+.kg2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+@media(max-width:480px){.kg3{grid-template-columns:1fr}.kg2{grid-template-columns:1fr}}
+.kn{font-size:13px;color:var(--mu);margin:10px 0 6px}
+.krows .kh,.krows .kr{display:grid;grid-template-columns:1fr 1fr 70px;gap:6px;align-items:center;margin-bottom:6px}
+.krows .kh span{font-size:12px;font-weight:800;color:var(--vi)}
+.kd{font-weight:800;color:var(--am);text-align:center}
+.kadd{font:inherit;font-size:13px;font-weight:800;color:var(--vi);background:transparent;border:1.5px dashed var(--ln);border-radius:14px;padding:4px 12px;cursor:pointer}
+.kwarn{margin-top:12px;background:#FFFAF1;border:1.5px solid #F0DDBE;border-radius:12px;padding:10px 12px}
+.kchk{display:flex;gap:10px;align-items:flex-start;width:100%;font:inherit;font-size:13.5px;font-weight:600;border:none;background:transparent;padding:4px 0;cursor:pointer;text-align:left;color:var(--tx)}
+.kchk .bx{flex:none;width:19px;height:19px;border-radius:5px;border:2.5px solid #C9A46A;background:#fff;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;margin-top:1px}
+.kchk.on .bx{background:var(--am2);border-color:var(--am2)}
+details.kd2{margin:10px 0 0}
+.kout{margin-top:12px;padding:12px 14px;border-radius:12px;background:#fff;border:1.5px solid var(--ln);font-size:14.5px}
+.kp{margin:0 0 6px}.kp b{color:var(--am)}
+.kpat{background:#F7EEF2;border-left:4px solid var(--mg);border-radius:8px;padding:8px 10px;margin:8px 0;font-size:14px}
+.kv{border-radius:8px;padding:7px 10px;margin:6px 0;font-size:13.5px;font-weight:700}
+.kv.ok{background:#E3F1E8;color:var(--vd)}.kv.bad{background:#FBE3EC;color:var(--mg)}.kv.mid{background:#FFF1D6;color:#7A4E10}
+table.sdf{border-collapse:collapse;font-size:12px;margin:10px auto 4px}
+table.sdf th,table.sdf td{padding:4px 6px;border-bottom:1px solid var(--ln);text-align:center}
+table.sdf th{color:var(--vi);font-weight:800}
+table.sdf .hl{outline:2.5px solid var(--mg);outline-offset:-2px;background:#FBE3EC;font-weight:800}
+.srch{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:#fff;border:1.5px solid var(--ln);border-radius:8px;padding:6px 8px;margin:6px 0;word-break:break-word}
+.mleg{font-size:13px;margin:2px 0 6px}.mleg div{margin:3px 0}.mleg b{display:inline-block;width:16px}
+.sgw{margin-top:8px}
+table.sgt{border-collapse:collapse;font-size:12.5px;width:100%;max-width:520px;background:#fff;border:1.5px solid var(--ln);border-radius:10px;overflow:hidden}
+table.sgt th{white-space:nowrap;font-size:11.5px;text-align:left;color:var(--vi);padding:6px 8px;border-bottom:1.5px solid var(--ln)}
+table.sgt td{padding:3px 8px;white-space:nowrap}table.sgt tr.t td,table.sgt tr.h td{white-space:normal}
+table.sgt td.sv{width:220px;padding:0 4px}
+table.sgt tr.h td{font-weight:800;color:var(--am);padding-top:8px}
+table.sgt tr.sub td,table.sgt tr.tot td{border-top:1px solid var(--ln)}
+table.sgt tr.tot td{font-weight:800;border-top:2px solid var(--am)}
+table.sgt tr.t td{font-size:11.5px;color:var(--mu)}
+table.sgt tr.t td span{color:var(--mu);font-style:italic}
+table.sgt tr.key td{background:#FBE3EC;color:var(--mg);font-weight:700;border-top:2px solid var(--mg);padding:7px 8px}
+.sgcall{margin-top:6px;font-size:13.5px;color:var(--mg);font-weight:600}
+.sgcall b{color:var(--mg)}
+@media(max-width:480px){table.sgt td.sv{width:150px}table.sgt td.sv svg{width:150px}}
+.wm{background:#fff;border:1.5px solid var(--ln);border-radius:10px;padding:9px 11px;margin-bottom:10px;font-size:13.5px;line-height:1.45}.wm>b{display:block;margin-bottom:4px}.wm>div{margin:3px 0}.wk{display:inline-block;min-width:104px;text-align:center;font-size:11.5px;font-weight:800;border-radius:10px;padding:1px 8px;margin-right:6px}.wk.ok{background:#e3f4ea;color:#17703f}.wk.pb{background:#fbe3ef;color:#a3175e}.wk.na{background:#fdf0d8;color:#8a5a00}.wk.sa{background:#ececf1;color:#4b4b5a}
+details.gd.ind{margin:8px 0}details.gd .in{padding:2px 8px 10px}details.ex2 details.rob .in{padding:0 6px 8px}.gd>summary{display:flex;flex-direction:column;gap:1px}.gdt{font-weight:800;color:var(--am)}.gdq{font-weight:600;color:var(--mu);font-size:13px}
+.gh{font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mg);margin:10px 0 4px}.gol{margin:0;padding-left:20px;font-size:13.5px;line-height:1.45}.gol li{margin:3px 0}.gp{font-size:13.5px;line-height:1.5;margin:0}
+.gbt{border:1.5px solid var(--ln);background:#fff;border-radius:16px;padding:5px 10px;font:inherit;font-size:12.5px;font-weight:700;color:var(--am);cursor:pointer;margin:0 6px 6px 0;transition:background .25s,color .25s}.gbt.on{background:var(--am);color:#fff;border-color:var(--am)}.gbt:disabled{opacity:.35;cursor:not-allowed}
+.fp{position:relative;background:#fff;border:1px solid var(--ln);border-radius:10px;margin:6px 0}.pa{position:absolute;left:72px;right:14px;top:0;bottom:0}.fls{position:absolute;left:0;top:0;width:68px}
+.flab{position:absolute;left:8px;font-size:11px;line-height:1.1;color:var(--tx);transition:opacity .5s}
+.fl{position:absolute;top:4px;bottom:4px;border-left:1.5px dashed #b9a6ae}.fl.th{border-left:2px solid var(--mg)}.fl.hm{border-left:2px solid var(--am2)}.glk{font-size:11px;color:var(--mu);display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:-2px}.glk i{display:inline-block;width:0;height:11px;margin-right:4px;vertical-align:-1px;border-left:1.5px dashed #b9a6ae}.glk i.th{border-left:2px solid var(--mg)}.glk i.hm{border-left:2px solid var(--am2)}.flb{position:absolute;bottom:4px;font-size:10px;color:var(--mu);transform:translateX(-50%);white-space:nowrap}
+.fr{position:absolute;left:0;right:0;height:12px;transition:opacity .5s}.ci{position:absolute;top:5px;height:2px;background:var(--am);transition:left .7s ease,width .7s ease}.pt{position:absolute;top:1px;width:10px;height:10px;margin-left:-5px;border-radius:2px;background:var(--am);transition:left .7s ease,background .5s}.pt.hr{background:var(--mg)}
+.dm{position:absolute;height:14px;background:var(--vi);clip-path:polygon(0 50%,50% 0,100% 50%,50% 100%);transition:left .7s ease,width .7s ease}
+.gleg{font-size:11.5px;color:var(--mu);display:flex;align-items:center;gap:5px;flex-wrap:wrap}.pt0{display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--am)}.pt0.hr{background:var(--mg)}.dm0{display:inline-block;width:16px;height:9px;background:var(--vi);clip-path:polygon(0 50%,50% 0,100% 50%,50% 100%)}
+.vd{font-size:13px;line-height:1.45;padding:7px 10px;border-radius:8px;margin-top:6px;transition:background .4s}.vd.ok{background:#e3f4ea}.vd.pb{background:#fbe3ef}.gn{color:var(--mu);font-weight:600;font-size:12px}
+.pico{width:100%;table-layout:fixed;word-break:break-word;border-collapse:collapse;font-size:12.5px;background:#fff;margin:6px 0}.pico th,.pico td{border:1px solid var(--ln);padding:5px 7px;text-align:left;vertical-align:top}.pico th{background:#F6EEF1;color:var(--am)}.pico .pl{font-weight:800;color:var(--vi)}.pico tr>*:first-child{width:26px;text-align:center}.pico .df{background:#fbe3ef;animation:gfl .6s}
+@keyframes gfl{from{background:#fff}to{background:#fbe3ef}}
+.fun{width:100%;max-width:420px;display:block;background:#fff;border:1px solid var(--ln);border-radius:10px;margin:6px 0}.fun circle{fill:var(--am);transition:opacity .7s}.fun circle.gone{opacity:.08}.fun .ft{font-size:12px;fill:#8A6F7B}
+.sml{font-weight:800;font-size:12.5px;color:var(--am);margin:10px 0 5px}.srow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px;border-top:1px solid var(--ln);padding-top:6px;font-size:13px}.srow>span:first-child{font-weight:700;min-width:130px}
+.sres{display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px;margin:12px 0 4px}.stars{white-space:nowrap}.stars span{font-size:30px;color:#E6D9DE;display:inline-block;transition:color .45s,transform .45s}.stars span.on{color:var(--am2);transform:scale(1.08)}.slv{font-weight:800;color:var(--am);font-size:15px}
+.snote{font-size:12.5px;color:var(--mu)}.sback{margin-top:8px;background:#FFF6E6;border-left:4px solid var(--am2);border-radius:8px;padding:8px 10px;font-size:13px;line-height:1.45;animation:gfl2 .5s}@keyframes gfl2{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kick">Interprete · leitura crítica</div>
+  <h1>Dá pra confiar nessa <em>revisão?</em></h1>
+  <p class="lead">Baseado no AMSTAR 2. A versão rápida cabe na consulta; a completa ensina a investigar.</p>
+  <div class="tabs" id="tabs"><button data-m="r" class="on">Roteiro de leitura</button><button data-m="c">AMSTAR 2: itens críticos</button></div>
+  <div id="vq"><div class="card" id="quick"></div></div>
+  <div id="vc" style="display:none"><div class="bar" id="bar"></div>
+  <div class="card" id="card"></div></div>
+  <div class="foot">Baseado no AMSTAR 2 (Shea et al., <i>BMJ</i> 2017;358:j4008), versão simplificada para clínicos, com apenas os 7 domínios críticos. A certeza da evidência (GRADE), os sinais de alerta, as checagens “Investigue mais” e o bloco de aplicabilidade não fazem parte do AMSTAR 2 e não alteram a classificação. Outro instrumento para avaliar revisões: ROBIS (Whiting et al., <i>J Clin Epidemiol</i> 2016). <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5833365/">Artigo do AMSTAR 2</a></div>
+</div>
+<script>
+const G={imp:0,inc:0,rob:0,robLow:0,ind:0,pub:0,sd:'ecr',sv:{rob:0,inc:0,ind:0,imp:0,pub:0},su:{ef:0,dr:0}};
+const gGet=p=>p.split('.').reduce((o,k)=>o[k],G);
+const gSet=(p,v)=>{const ks=p.split('.');const l=ks.pop();ks.reduce((o,k)=>o[k],G)[l]=v};
+const gBtn=(v,k,val,t)=>`<button class="gbt" data-gb="${v}" data-gk="${k}" data-gval="${val}">${t}</button>`;
+const gPct=(x,lo,hi)=>((x-lo)/(hi-lo)*100).toFixed(2)+'%';
+function gForest(n,lo,hi,lines){return `<div class="fp" style="height:${n*24+(n>1?28:20)}px"><div class="pa">${lines.map(l=>`<div class="fl${l.th?' th':''}${l.hm?' hm':''}" style="left:${gPct(l.x,lo,hi)}"></div>`).join('')}${Array.from({length:n},(_,i)=>`<div class="fr" data-i="${i}" style="top:${8+i*24}px"><div class="ci"></div><div class="pt"></div></div>`).join('')}<div class="dm"></div></div><div class="fls">${Array.from({length:n},(_,i)=>`<div class="flab" data-i="${i}" style="top:${8+i*24}px"></div>`).join('')}</div></div><div class="glk">${lines.map(l=>`<span><i class="${l.th?'th':l.hm?'hm':''}"></i>${l.t}</span>`).join('')}</div>`}
+function gRows(el,rows,lo,hi){rows.forEach((r,i)=>{const f=el.querySelector(`.fr[data-i="${i}"]`);if(!f)return;const ci=f.querySelector('.ci'),pt=f.querySelector('.pt');
+ ci.style.left=gPct(r.l,lo,hi);ci.style.width=((r.u-r.l)/(hi-lo)*100).toFixed(2)+'%';pt.style.left=gPct(r.e,lo,hi);pt.classList.toggle('hr',!!r.hr);f.style.opacity=r.off?.15:1;
+ const lb=el.querySelector(`.flab[data-i="${i}"]`);if(lb){lb.innerHTML=r.lab||'';lb.style.opacity=r.off?.3:1}})}
+function gDiamond(el,d,lo,hi){const m=el.querySelector('.dm');if(!d){m.style.display='none';return}m.style.display='';m.style.left=gPct(d.l,lo,hi);m.style.width=((d.u-d.l)/(hi-lo)*100).toFixed(2)+'%';m.style.top=(el.querySelectorAll('.fr').length*24+5)+'px'}
+function gVerdict(el,cls,t){const v=el.querySelector('.vd');v.className='vd '+cls;v.innerHTML=t}
+function gOn(el){el.querySelectorAll('[data-gb]').forEach(b=>b.classList.toggle('on',String(gGet(b.dataset.gk))===b.dataset.gval))}
+const GV={
+imp:{lo:-6,hi:9,S:[
+ {r:{l:4,u:6.5,e:5.2},n:'1.200 participantes',v:['ok','<b>Não rebaixar.</b> O intervalo inteiro fica acima do limiar de benefício importante, e a amostra é grande.']},
+ {r:{l:1.2,u:5.6,e:3.4},n:'900 participantes',v:['pb','<b>Rebaixar um nível.</b> O intervalo cruza o limiar: o efeito verdadeiro pode ser importante ou pequeno demais para o paciente perceber.']},
+ {r:{l:-4.5,u:6,e:0.8},n:'300 participantes',v:['pb','<b>Rebaixar dois níveis.</b> O intervalo cruza dois limiares: vai de dano importante a benefício importante.']},
+ {r:{l:3.6,u:8.6,e:6.1},n:'2 estudos, 80 participantes',v:['pb','<b>Considerar rebaixar.</b> O intervalo não cruza o limiar, mas o número de participantes é menor que o necessário para uma estimativa confiável (tamanho ótimo de informação). Efeito grande com poucos participantes merece desconfiança.']}],
+ build(){return `<div>${gBtn('imp','imp',0,'Não cruza')}${gBtn('imp','imp',1,'Cruza um limiar')}${gBtn('imp','imp',2,'Cruza dois limiares')}${gBtn('imp','imp',3,'Não cruza, amostra pequena')}</div>${gForest(1,this.lo,this.hi,[{x:0,t:'nulo'},{x:3,t:'benefício importante (MCID)',th:1},{x:-3,t:'dano importante',hm:1}])}<div class="vd"></div>`},
+ apply(el){const s=this.S[G.imp];gRows(el,[{...s.r,lab:'Efeito<br>combinado'}],this.lo,this.hi);gDiamond(el,null);gVerdict(el,s.v[0],s.v[1]+` <span class="gn">(${s.n})</span>`);gOn(el)}},
+inc:{lo:-3,hi:9,S:[
+ {rows:[[4,1.6],[5.6,1.8],[4.6,2.2],[6.2,1.5],[5.1,2]],v:['ok','<b>Não rebaixar.</b> As estimativas variam, mas os intervalos se sobrepõem e todas ficam do mesmo lado do limiar: todas indicam efeito importante.']},
+ {rows:[[5.6,1],[6.3,1.1],[-0.4,0.9],[0.8,1],[5.2,1.2]],v:['pb','<b>Rebaixar.</b> Há estimativas dos dois lados do limiar, os intervalos quase não se sobrepõem e nenhum subgrupo definido a priori explica a diferença.']}],
+ build(){return `<div>${gBtn('inc','inc',0,'Mesmo lado do limiar')}${gBtn('inc','inc',1,'Lados opostos')}</div>${gForest(5,this.lo,this.hi,[{x:0,t:'nulo'},{x:3,t:'limiar (MCID)',th:1}])}<div class="vd"></div>`},
+ apply(el){const s=this.S[G.inc];gRows(el,s.rows.map(([e,h],i)=>({l:e-h,u:e+h,e,lab:'Estudo '+(i+1)})),this.lo,this.hi);gDiamond(el,null);gVerdict(el,s.v[0],s.v[1]);gOn(el)}},
+rob:{lo:-2,hi:8,S:[
+ {rows:[[3.1,.8,0],[3.5,.9,0],[2.8,.8,0],[3.4,1.6,1],[2.6,1.7,1]],all:[2.6,3.6],low:[2.5,3.7],v:['ok','<b>Não rebaixar.</b> Há bastante evidência de baixo risco, e os estudos de alto risco mostram resultado semelhante: usam-se todos os estudos.']},
+ {rows:[[5.6,.8,1],[6,.9,1],[5.1,.8,1],[1.6,1.5,0],[2,1.6,0]],all:[4.2,5.4],low:[0.6,3],v:['pb','<b>Rebaixar.</b> Os estudos de alto risco têm a maior parte do peso e mostram efeito maior que os de baixo risco. Alternativa: basear a estimativa só nos estudos de baixo risco.']}],
+ build(){return `<div>${gBtn('rob','rob',0,'Resultados semelhantes')}${gBtn('rob','rob',1,'Alto risco com efeito maior')}</div><div>${gBtn('rob','robLow',0,'Todos os estudos')}${gBtn('rob','robLow',1,'Só baixo risco')}</div>${gForest(5,this.lo,this.hi,[{x:0,t:'nulo'}])}<div class="gleg"><span class="pt0"></span> baixo risco <span class="pt0 hr"></span> alto risco <span class="dm0"></span> efeito combinado</div><div class="vd"></div>`},
+ apply(el){const s=this.S[G.rob];gRows(el,s.rows.map(([e,h,hr],i)=>({l:e-h,u:e+h,e,hr,off:G.robLow&&hr,lab:'Estudo '+(i+1)})),this.lo,this.hi);const d=G.robLow?s.low:s.all;gDiamond(el,{l:d[0],u:d[1]},this.lo,this.hi);gVerdict(el,s.v[0],s.v[1]);gOn(el)}},
+ind:{S:[
+ {t:['Adultos com insônia crônica','TCC-I','Lista de espera','Qualidade do sono (escala validada)'],s:['Adultos de 25 a 60 anos com insônia crônica','TCC-I','Lista de espera','Qualidade do sono (escala validada)'],d:[0],v:['ok','<b>Não rebaixar.</b> A faixa etária é mais estreita, mas não há motivo para esperar que o efeito seja muito diferente.']},
+ {t:['Adultos com insônia crônica','TCC-I','Lista de espera','Qualidade do sono (escala validada)'],s:['Universitários com sono ruim, sem diagnóstico de insônia','TCC-I','Lista de espera','Qualidade do sono (escala validada)'],d:[0],v:['pb','<b>Considerar rebaixar.</b> A população é diferente, e é plausível que o efeito em quem tem insônia crônica seja outro.']},
+ {t:['Adultos com insônia crônica','TCC-I','Lista de espera','Qualidade do sono (escala validada)'],s:['Adultos com insônia crônica','TCC-I','Lista de espera','Cortisol salivar'],d:[3],v:['pb','<b>Rebaixar.</b> O desfecho é substituto: um marcador laboratorial não garante melhora no que importa ao paciente.']},
+ {t:['Adultos com insônia crônica','TCC-I','Medicamento hipnótico','Qualidade do sono (escala validada)'],s:['Adultos com insônia crônica','TCC-I (em alguns estudos); medicamento (em outros)','Placebo ou lista de espera','Qualidade do sono (escala validada)'],d:[1,2],v:['pb','<b>Rebaixar.</b> Comparação indireta: nenhum estudo comparou TCC-I com medicamento; a conclusão depende de comparar cada um com controles diferentes.']}],
+ build(){return `<div>${gBtn('ind','ind',0,'Diferença pequena')}${gBtn('ind','ind',1,'População diferente')}${gBtn('ind','ind',2,'Desfecho substituto')}${gBtn('ind','ind',3,'Comparação indireta')}</div><div class="pic"></div><div class="vd"></div>`},
+ apply(el){const s=this.S[G.ind];const L=['P','I','C','O'];
+  el.querySelector('.pic').innerHTML=`<div class="glk">P população · I intervenção · C comparador · O desfecho</div><table class="pico"><tr><th></th><th>Sua pergunta</th><th>Estudos incluídos</th></tr>${L.map((l,i)=>`<tr><td class="pl">${l}</td><td>${s.t[i]}</td><td class="${s.d.includes(i)?'df':''}">${s.s[i]}</td></tr>`).join('')}</table>`;gVerdict(el,s.v[0],s.v[1]);gOn(el)}},
+pub:{P:[[2.1,1],[1.7,2],[2.6,2],[2.3,3],[1.3,3],[3.1,3],[1.9,4],[3.4,4],[0.6,4.3],[2.9,5],[4.2,5],[-0.4,5.2],[3.8,6],[0.2,6.1],[4.9,6.4],[-1,6.6]],M:[8,11,13,15],
+ build(){const W=300,H=170,x=v=>40+(v+2)/8*(W-60),y=r=>16+(r-1)/6*(H-40);
+  return `<div>${gBtn('pub','pub',0,'Todos publicados')}${gBtn('pub','pub',1,'Faltam estudos pequenos')}</div><svg class="fun" viewBox="0 0 ${W} ${H}"><polygon points="${x(2)},${y(0.6)} ${x(-2)},${y(7)} ${x(6)},${y(7)}" fill="#F6EEF1" stroke="#E2D4D9"/><line x1="${x(2)}" y1="${y(.6)}" x2="${x(2)}" y2="${y(7)}" stroke="#7A1236" stroke-dasharray="3 3"/>${this.P.map((p,i)=>`<circle class="${this.M.includes(i)?'mz':''}" cx="${x(p[0])}" cy="${y(p[1])}" r="4.5"/>`).join('')}<text x="10" y="22" class="ft">estudos grandes</text><text x="10" y="${H-10}" class="ft">estudos pequenos</text><text x="${x(-1.6)}" y="${H-24}" class="ft">menor efeito</text><text x="${x(5.6)}" y="${H-24}" text-anchor="end" class="ft">maior efeito</text></svg><div class="vd"></div>`},
+ apply(el){el.querySelectorAll('circle.mz').forEach(c=>c.classList.toggle('gone',G.pub==1));gVerdict(el,G.pub?'pb':'ok',G.pub?'<b>Suspeita de viés de publicação.</b> Os estudos pequenos com efeito menor “sumiram”: o funil fica assimétrico e o efeito combinado tende a ser superestimado.':'<b>Funil simétrico.</b> Estudos pequenos se espalham para os dois lados do efeito combinado, como esperado pelo acaso.');gOn(el)}},
+sim:{D:[['rob','Risco de viés'],['inc','Inconsistência'],['ind','Evidência indireta'],['imp','Imprecisão'],['pub','Viés de publicação']],N:['','Muito baixa','Baixa','Moderada','Alta'],
+ build(){return `<div class="sml">1. Desenho dos estudos</div><div>${gBtn('sim','sd','ecr','Ensaios randomizados (começa em alta)')}${gBtn('sim','sd','nrsi','Não randomizados (começa em baixa)')}</div>
+  <div class="sml">2. Problemas em cada domínio</div>${this.D.map(([k,t])=>`<div class="srow"><span>${t}</span><span>${gBtn('sim','sv.'+k,0,'Não grave')}${gBtn('sim','sv.'+k,1,'Grave (−1)')}${gBtn('sim','sv.'+k,2,'Muito grave (−2)')}</span></div>`).join('')}
+  <div class="sml">3. Motivos para subir <span class="gn">(só estudos não randomizados bem conduzidos)</span></div><div class="srow"><span>Efeito grande</span><span>${gBtn('sim','su.ef',0,'Não')}${gBtn('sim','su.ef',1,'Grande (+1)')}${gBtn('sim','su.ef',2,'Muito grande (+2)')}</span></div><div class="srow"><span>Gradiente dose-resposta</span><span>${gBtn('sim','su.dr',0,'Não')}${gBtn('sim','su.dr',1,'Sim (+1)')}</span></div>
+  <div class="sres"><div class="stars">${'<span>★</span>'.repeat(4)}</div><div class="slv"></div></div><div class="snote"></div><div class="sback"></div>`},
+ apply(el){const r=G.sd=='ecr';const down=Object.values(G.sv).reduce((a,b)=>a+b,0);const up=r?0:G.su.ef+G.su.dr;let n=(r?4:2)-down+up;n=Math.max(1,Math.min(4,n));
+  el.querySelectorAll('.stars span').forEach((s,i)=>s.classList.toggle('on',i<n));el.querySelector('.slv').textContent='Certeza '+this.N[n].toLowerCase();
+  el.querySelectorAll('[data-gk^="su."]').forEach(b=>{b.disabled=r});
+  el.querySelector('.snote').innerHTML=r?'Ensaios randomizados não sobem de nível: os motivos para subir valem só para estudos não randomizados.':'';
+  const nd=Object.values(G.sv).filter(v=>v>0).length;
+  el.querySelector('.sback').innerHTML=nd>=2?'<b>Dê um passo atrás.</b> A certeza é um contínuo, e cada domínio também. Se as preocupações em vários domínios estão no limite entre não grave e grave, a soma pode exagerar o rebaixamento. Avalie a magnitude dos problemas em conjunto, decida a nota final e explique o motivo.':'';
+  el.querySelector('.sback').style.display=nd>=2?'':'none';gOn(el)}}
+};
+function hydrateG(root){(root||document).querySelectorAll('.gv').forEach(el=>{const g=GV[el.dataset.v];if(!g)return;if(!el.dataset.b){el.innerHTML=g.build();el.dataset.b=1}g.apply(el)})}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-gb]');if(!b||b.disabled)return;e.preventDefault();const v=b.dataset.gval;gSet(b.dataset.gk,/^\d+$/.test(v)?+v:v);
+ if(b.dataset.gk=='sd'&&v=='ecr'){G.su.ef=0;G.su.dr=0}
+ document.querySelectorAll(`.gv[data-v="${b.dataset.gb}"]`).forEach(el=>GV[b.dataset.gb].apply(el))});
+const gDom=(k,t,q,how,when,v)=>`<details class="ind gd" data-k="gd_${k}"><summary><span class="gdt">${t}</span><span class="gdq">${q}</span></summary><div class="in"><div class="gh">Como avaliar</div><ol class="gol">${how.map(x=>`<li>${x}</li>`).join('')}</ol><div class="gh">Quando rebaixar</div><p class="gp">${when}</p><div class="gh">Exemplo com dados fictícios</div><div class="gv" data-v="${v}"></div></div></details>`;
+const GRADEG=`<details class="rob ind" data-k="gradeg"><summary>Guia do GRADE: como avaliar cada domínio</summary><div class="in">
+<p class="gp">O GRADE julga a certeza do <b>conjunto de estudos para cada desfecho</b>, não de cada estudo isolado. A certeza indica o quanto se pode confiar que o efeito verdadeiro está do lado certo de um limiar (o efeito nulo ou a diferença mínima importante, MCID). Abra cada domínio para ver como avaliá-lo.</p>
+${gDom('rob','Risco de viés','Os estudos com problemas sustentam o resultado?',['Na figura de risco de viés (RoB 2 para ensaios randomizados, ROBINS-I para não randomizados), separe os estudos em baixo e alto risco para o desfecho em questão.','Veja quanto peso os estudos de alto risco têm na metanálise.','Compare os resultados dos estudos de alto e de baixo risco, por exemplo numa análise de sensibilidade que retira os de alto risco.'],'Se os estudos de alto risco dominam o peso, em geral se rebaixa. Se há bastante evidência de baixo risco com resultados semelhantes aos de alto risco, usam-se todos os estudos e não se rebaixa.','rob')}
+${gDom('inc','Inconsistência','Os estudos contam a mesma história?',['No forest plot, veja o quanto as estimativas dos estudos diferem entre si.','Veja o quanto os intervalos de confiança se sobrepõem.','Veja se as estimativas ficam do mesmo lado do limiar (o nulo ou a MCID).','Antes de rebaixar, procure uma explicação por subgrupo definido a priori.'],'Quando há estimativas dos dois lados do limiar, com pouca sobreposição dos intervalos, e nenhuma explicação.','inc')}
+${gDom('ind','Evidência indireta','Os estudos respondem à sua pergunta?',['Escreva o PICO da pergunta: população, intervenção, comparador e desfecho.','Compare com o PICO dos estudos incluídos, elemento por elemento.','Para cada diferença, pergunte: é provável que ela mude o efeito de forma importante?','Verifique se a comparação é direta. Se nenhum estudo comparou A com B, e a conclusão vem de A contra placebo e de B contra placebo, a comparação é indireta.'],'Quanto maior a probabilidade de que a diferença mude substancialmente o efeito, mais indicado é rebaixar. Desfechos substitutos e comparações indiretas costumam justificar o rebaixamento.','ind')}
+${gDom('imp','Imprecisão','O intervalo de confiança permite uma conclusão única?',['Identifique o limiar: o efeito nulo ou a MCID na escala do desfecho.','Localize o intervalo de confiança do efeito combinado em relação a esse limiar.','Se o intervalo cruza o limiar, rebaixe.','Se não cruza, verifique se o total de participantes é suficiente (tamanho ótimo de informação).'],'Um nível quando o intervalo cruza o limiar ou a amostra é insuficiente. Dois níveis quando o intervalo cruza mais de um limiar (ex.: vai de dano importante a benefício importante) ou quando a amostra é muito menor que a necessária.','imp')}
+${gDom('pub','Viés de publicação','Faltam estudos que não chegaram a ser publicados?',['Com 10 ou mais estudos, observe o gráfico de funil: se faltam estudos pequenos de um lado, há assimetria.','Com menos estudos, o gráfico não é confiável: procure ensaios registrados e não publicados.','Observe se o conjunto é formado por estudos pequenos financiados pela indústria: esse padrão deve levantar suspeita.'],'Quando a suspeita é forte. A ausência de gráfico de funil não impede a aplicação do GRADE.','pub')}
+<div class="robc" style="border-color:var(--mg)"><div class="rt">Como a nota é formada</div><div>Ensaios randomizados começam com certeza <b>alta</b>; estudos não randomizados, com certeza <b>baixa</b>. Cada domínio grave rebaixa um nível; muito grave, dois. Estudos não randomizados bem conduzidos podem subir por efeito grande ou gradiente dose-resposta. Ensaios randomizados não sobem. Teste abaixo.</div><div class="gv" data-v="sim"></div></div>
+<p style="margin:8px 0 0" class="note">Baseado na série Core GRADE (Guyatt et al., <i>BMJ</i> 2025;389:e081903, e081904, e081905, e083864, e083865). Exemplos com dados fictícios.</p></div></details>`;
+
+const NAO_ENC={v:'ne',t:'Não encontrei',s:'Informação ausente conta como “não”'};
+const STEPS=[
+ {id:'intro',kind:'intro'},
+ {id:'i2',n:2,kind:'chk',tag:'Crítico 1 de 7',q:'A revisão tinha um protocolo definido antes de começar?',
+  why:'Sem protocolo, os autores podem mudar a pergunta, os critérios ou as análises depois de ver os resultados.',
+  onde:'Nos Métodos ou no resumo: procure “PROSPERO”, “registration”, “protocol” ou um número CRD. O registro pode ser conferido no site do PROSPERO.',
+  dica:'Marque o que você encontrou no artigo. A ferramenta calcula a resposta.',
+  groups:[
+   {t:'O protocolo escrito antes incluía',sub:'todos para “sim, parcial”',items:[['p1','A pergunta da revisão'],['p2','A estratégia de busca'],['p3','Os critérios de inclusão e exclusão'],['p4','O plano de avaliação do risco de viés']]},
+   {t:'Para “sim”',sub:'tudo acima, mais',items:[['s1','Protocolo registrado','Ex.: PROSPERO, com número CRD'],['s2','Plano de metanálise/síntese e de investigação da heterogeneidade'],['s3','Justificou desvios do protocolo','Ou não houve desvios']]}],
+  calc:c=>{const par=['p1','p2','p3','p4'].every(k=>c.has(k));return par&&['s1','s2','s3'].every(k=>c.has(k))?'sim':par?'par':'nao'}},
+ {id:'i4',n:4,kind:'chk',tag:'Crítico 2 de 7',q:'A busca foi abrangente?',
+  why:'Busca estreita perde estudos, e os que faltam costumam ser justamente os negativos.',
+  onde:'Métodos, seção de busca (“search strategy”, “information sources”). A estratégia completa costuma ficar no material suplementar.',
+  dica:'<b>Padrão Cochrane para revisões de intervenção:</b> CENTRAL + MEDLINE + Embase. Conforme o tema, também LILACS (América Latina), CINAHL (enfermagem) ou PsycINFO (saúde mental). O AMSTAR 2 exige no mínimo 2 bases relevantes.',
+  groups:[
+   {t:'Bases pesquisadas',sub:'pelo menos 2',items:[['b1','MEDLINE','Também conta se buscou pelo PubMed'],['b2','Embase'],['b3','CENTRAL (Cochrane Library)'],['b4','Outra base relevante para o tema','Scopus, Web of Science, LILACS, CINAHL, PsycINFO…']]},
+   {t:'Para “sim, parcial”',sub:'também',items:[['p1','Mostrou as palavras-chave ou a estratégia de busca'],['p2','Não restringiu idioma e data, ou justificou a restrição']]},
+   {t:'Para “sim”',sub:'tudo acima, mais',items:[['s1','Olhou as referências dos estudos incluídos'],['s2','Buscou em registros de ensaios','Ex.: ClinicalTrials.gov, ICTRP'],['s3','Consultou especialistas da área'],['s4','Buscou literatura cinzenta, quando relevante','Teses, anais de congresso, relatórios'],['s5','Fez a busca até 24 meses antes de concluir a revisão']]}],
+  calc:c=>{const nb=['b1','b2','b3','b4'].filter(k=>c.has(k)).length;const par=nb>=2&&c.has('p1')&&c.has('p2');return par&&['s1','s2','s3','s4','s5'].every(k=>c.has(k))?'sim':par?'par':'nao'}},
+ {id:'i7',n:7,kind:'chk',tag:'Crítico 3 de 7',q:'Listou os estudos excluídos e explicou por quê?',
+  why:'Sem essa lista, você não consegue saber se algum estudo “inconveniente” ficou de fora.',
+  onde:'Quase sempre no material suplementar (“excluded studies”, “characteristics of excluded studies”). O fluxograma PRISMA mostra só números, não a lista.',
+  groups:[
+   {t:'Para “sim, parcial”',items:[['p1','Listou todos os estudos lidos na íntegra e excluídos']]},
+   {t:'Para “sim”',sub:'mais',items:[['s1','Justificou a exclusão de cada um']]}],
+  calc:c=>c.has('p1')&&c.has('s1')?'sim':c.has('p1')?'par':'nao'},
+ {id:'i9',n:9,kind:'chk',tag:'Crítico 4 de 7',q:'Avaliou o risco de viés de cada estudo com um método adequado?',
+  why:'Sem avaliar o risco de viés de cada estudo, a revisão pode dar o mesmo peso a estudos bem e mal conduzidos, e a conclusão herda as falhas dos estudos.',
+  onde:'Uma tabela ou figura com sinais verde, amarelo e vermelho por estudo.',
+  dica:'Ferramentas validadas comuns: <b>RoB 2</b> para ensaios randomizados e <b>ROBINS-I</b> para estudos não randomizados. <b>Cegamento pode quebrar sem ninguém perceber:</b> a creatina eleva a creatinina no sangue, e quem vê o exame pode deduzir o grupo de cada participante.',
+  groupsFn:()=>{const g=[];if(S.des!='nrsi')g.push(
+    {t:'Ensaios randomizados · “sim, parcial”',items:[['r1','Ocultação da alocação'],['r2','Cegamento de pacientes e avaliadores','Dispensável para desfechos objetivos, como mortalidade']]},
+    {t:'Ensaios randomizados · “sim”',sub:'mais',items:[['r3','Se a sequência de alocação era de fato aleatória'],['r4','Seleção do resultado relatado','Entre várias medidas ou análises do mesmo desfecho']]});
+   if(S.des!='ecr')g.push(
+    {t:'Não randomizados · “sim, parcial”',items:[['n1','Confundimento'],['n2','Viés de seleção']]},
+    {t:'Não randomizados · “sim”',sub:'mais',items:[['n3','Como exposição e desfecho foram medidos'],['n4','Seleção do resultado relatado']]});
+   g.push({t:'Transparência',sub:'não muda o cálculo',items:[['j','Mostrou a justificativa de cada julgamento','Muitas revisões só mostram as cores, sem explicar o porquê']]});return g},
+  calc:c=>{const r=c.has('r1')&&c.has('r2')?(c.has('r3')&&c.has('r4')?2:1):0,n=c.has('n1')&&c.has('n2')?(c.has('n3')&&c.has('n4')?2:1):0;
+   const v=S.des=='ecr'?r:S.des=='nrsi'?n:Math.min(r,n);return ['nao','par','sim'][v]}},
+ {id:'i11',n:11,kind:'meta',tag:'Crítico 5 de 7',q:'Se fez metanálise, combinou os estudos de forma adequada?',
+  why:'Juntar estudos muito diferentes, ou do jeito errado, produz uma estimativa que parece precisa, mas não responde a uma pergunta clínica definida.',
+  onde:'Métodos (“statistical analysis”, “data synthesis”), o gráfico de floresta (forest plot) e a tabela de características dos estudos incluídos.',
+  dica:'<b>Os estudos podem ser combinados numa única estimativa?</b> Compare dose, duração, população e como o desfecho foi medido. Ensaios, coortes e transversais não devem ser somados num único resultado. E juntar estudos transversais continua mostrando só associação, não causa.',
+  sim:['Justificou por que fazia sentido juntar os dados','Usou um método ponderado adequado e levou em conta a heterogeneidade, quando havia','Investigou as causas da heterogeneidade','Se incluiu não randomizados: combinou estimativas ajustadas para confundimento e apresentou randomizados e não randomizados separadamente'],
+  opts:[{v:'sim',t:'Sim'},{v:'nao',t:'Não'},NAO_ENC,{v:'na',t:'Não fez metanálise',s:'Não conta como falha'}]},
+ {id:'i13',n:13,kind:'radio',tag:'Crítico 6 de 7',q:'Levou o risco de viés em conta ao interpretar os resultados?',
+  why:'Avaliar o risco de viés e depois ignorá-lo na conclusão é o mesmo que não avaliar.',
+  onde:'Discussão e conclusões. Veja também se há análise de sensibilidade excluindo os estudos de alto risco de viés.',
+  sim:['Incluiu só ensaios randomizados de baixo risco de viés','OU, se incluiu estudos de risco moderado/alto ou não randomizados, discutiu o provável impacto disso nos resultados'],
+  opts:[{v:'sim',t:'Sim'},{v:'nao',t:'Não'},NAO_ENC]},
+ {id:'i15',n:15,kind:'radio',tag:'Crítico 7 de 7',q:'Investigou viés de publicação e discutiu o impacto?',
+  why:'Estudos com resultado positivo são publicados com mais frequência. Se só eles entram, o efeito parece maior do que é.',
+  onde:'Gráfico de funil (funnel plot) ou teste de Egger, nos Resultados ou no suplementar, e a discussão sobre isso.',
+  sim:['Fez avaliação gráfica ou estatística de viés de publicação','E discutiu a probabilidade e a magnitude do impacto nos resultados'],
+  opts:[{v:'sim',t:'Sim'},{v:'nao',t:'Não'},NAO_ENC,{v:'na',t:'Não fez síntese quantitativa',s:'Não conta como falha'}]},
+ {id:'gr',kind:'grade'},
+ {id:'al',kind:'alert'},
+ {id:'a1',ap:true,kind:'radio',tag:'Aplicabilidade 1 de 5',q:'A população dos estudos se parece com o seu paciente?',why:'Idade, condição clínica, gravidade, contexto. Uma revisão em atletas pode não valer para idosos com insônia.',onde:'Tabela de características dos estudos incluídos.',opts:[{v:'sim',t:'Sim'},{v:'inc',t:'Em parte / incerto'},{v:'nao',t:'Não'}]},
+ {id:'a2',ap:true,kind:'radio',tag:'Aplicabilidade 2 de 5',q:'Os desfechos importam para o paciente?',why:'Qualidade do sono percebida, sintomas e função importam mais que marcadores intermediários ou escalas sem validação.',onde:'Métodos (desfechos primários e secundários) e Resultados.',opts:[{v:'sim',t:'Sim'},{v:'inc',t:'Em parte / incerto'},{v:'nao',t:'Não'}]},
+ {id:'a3',ap:true,kind:'radio',tag:'Aplicabilidade 3 de 5',q:'O tamanho do efeito faz diferença na prática?',why:'Estatisticamente significativo não é o mesmo que clinicamente relevante. Olhe a estimativa e o intervalo de confiança, não só o valor de p.',onde:'Resumo e forest plot: diferença média, risco relativo e intervalo de confiança.',opts:[{v:'sim',t:'Sim'},{v:'inc',t:'Em parte / incerto'},{v:'nao',t:'Não'}]},
+ {id:'a4',ap:true,kind:'radio',tag:'Aplicabilidade 4 de 5',q:'A revisão é recente o bastante?',why:'Uma revisão antiga pode ter perdido os estudos mais novos, e o resultado pode ter mudado.',onde:'Métodos: a data da última busca, não a data de publicação.',opts:[{v:'sim',t:'Sim'},{v:'inc',t:'Em parte / incerto'},{v:'nao',t:'Não'}]},
+ {id:'a5',ap:true,kind:'radio',tag:'Aplicabilidade 5 de 5',q:'Outras revisões ou agências sobre o mesmo tema concordam?',why:'Com os mesmos estudos, revisões diferentes podem chegar a conclusões opostas. Ex.: revisões sobre creatina e cognição divergem, e a agência europeia de segurança alimentar (EFSA) concluiu que não é possível estabelecer relação de causa e efeito.',onde:'Procure outras revisões sobre a mesma pergunta no Epistemonikos ou no Trip, e posicionamentos de agências e diretrizes.',opts:[{v:'sim',t:'Sim, concordam'},{v:'inc',t:'Em parte / não encontrei outras'},{v:'nao',t:'Não, divergem'}]},
+ {id:'fim',kind:'fim'}
+];
+const ALERTAS=[
+ ['t','Buscou os termos só no título','Ex.: depression[title]. Estudos que tratam do tema sem citá-lo no título ficam de fora.'],
+ ['sin','Faltaram sinônimos importantes','Ex.: buscou “omega-3” sem “fish oil” ou “polyunsaturated fatty acids”.'],
+ ['uma','Buscou em uma base só','Ex.: apenas PubMed.'],
+ ['dif','Usou estratégias diferentes em cada base','Ex.: no PubMed restringiu para “ensaios clínicos randomizados” e no Embase não.'],
+ ['lim','Busca antiga','A última busca foi feita mais de 24 meses antes da conclusão da revisão. A data de submissão ao periódico, quando informada, serve como aproximação da conclusão. Ex.: busca encerrada em 2021 e revisão submetida em 2024.'],
+ ['busc','Citou o buscador no lugar da base','Ex.: “buscamos no PubMed” em vez de “no MEDLINE”. Base ≠ buscador.'],
+ ['pri','Diz que “conduziu a revisão segundo o PRISMA”','O PRISMA orienta como relatar uma revisão, não como conduzi-la.'],
+ ['tri','Só um autor fez a triagem dos estudos','O adequado é que dois revisores avaliem cada estudo de forma independente.'],
+ ['mix','Misturou desenhos diferentes na mesma análise','Ex.: ensaios, coortes e transversais juntos num único número.'],
+ ['tra','Metanálise de transversais apresentada como causa','Juntar estudos transversais continua mostrando só associação.'],
+ ['peq','A maioria dos estudos incluídos é pequena e de um centro só','Estudos pequenos tendem a exagerar o efeito.'],
+ ['oti','A conclusão é mais otimista que os dados','Fala em benefício sem mencionar as limitações (risco de viés, inconsistência, estudos pequenos) nem a certeza da evidência.']];
+const S={tipo:null,des:null,titulo:'',ans:{},chk:{},al:new Set(),m:{},iv:{},op:{}};let cur=0;
+const CRIT=STEPS.filter(s=>s.n),AP=STEPS.filter(s=>s.ap);
+const $=s=>document.querySelector(s);
+function esc(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function cset(id){return S.chk[id]||(S.chk[id]=new Set())}
+function inflado(){const m=S.m;if(m.fez!='sim')return false;if(m.nmaior)return true;return m.rep=='sim'&&m.dif!='sim'&&m.trat=='nao'}
+function resp(st){if(st.kind=='chk')return st.calc(cset(st.id));if(st.kind=='meta'){const m=S.m;if(m.fez=='na')return 'na';if(m.fez!='sim')return undefined;return inflado()?'nao':m.met}return S.ans[st.id]}
+function metaOk(){const m=S.m;if(m.fez=='na')return true;if(m.fez!='sim'||!m.met||!m.rep)return false;if(m.rep=='sim'){if(!m.dif)return false;if(m.dif!='sim'&&!m.trat)return false}return true}
+const LAB={sim:['Sim','p-sim'],par:['Sim, parcial','p-par'],nao:['Não','p-nao'],ne:['Não encontrei','p-nao'],na:['Não se aplica','p-na'],inc:['Incerto','p-par']};
+function pill(v){const r=LAB[v]||['—','p-na'];return `<span class="pill ${r[1]}">${r[0]}</span>`}
+function bar(){$('#bar').innerHTML=STEPS.map((s,i)=>`<span class="${i<cur?'done':i==cur?'cur':''}"></span>`).join('')}
+function optHTML(o,sel){return `<button class="opt${sel?' sel':''}" data-v="${o.v}"><span class="dot"></span><span>${o.t}${o.s?`<small>${o.s}</small>`:''}</span></button>`}
+function chkHTML(k,t,s,on,cls=''){return `<button class="chk ${cls}${on?' on':''}" data-k="${k}"><span class="box">${on?'✓':''}</span><span>${t}${s?`<small>${s}</small>`:''}</span></button>`}
+function nav(ok,label){return `<div class="nav"><button class="btn sec" id="bk">Voltar</button><button class="btn pri" id="nx" ${ok?'':'disabled'}>${label||'Próxima'}</button></div>`}
+function wire(){const b=$('#bk');if(b)b.onclick=()=>go(cur-1);const n=$('#nx');if(n)n.onclick=()=>go(cur+1)}
+function head(st){return `<span class="tag${st.ap?' ap':''}">${st.tag}</span><h2>${st.q}</h2><p class="why">${st.why}</p>
+  <details><summary>Onde olhar no artigo</summary><div class="in">${st.onde}</div></details>${st.dica?`<div class="dica">${st.dica}</div>`:''}`}
+
+const VIS=`<details><summary>Entenda o “N inflado” (com exemplos)</summary><div class="in">
+<p style="margin:2px 0 8px">A repetição de um estudo no mesmo forest plot só é problema quando <b>as mesmas pessoas</b> entram mais de uma vez no resultado combinado.</p>
+<div class="vis">
+<div class="ex"><div class="tt">1. O mesmo placebo usado duas vezes <span class="bad">problema</span></div>
+<div class="row"><span class="lb2">Estudo A (5 g)</span><span class="chipg">creatina 20</span><span class="chipg pl">placebo 20</span></div>
+<div class="row"><span class="lb2">Estudo A (20 g)</span><span class="chipg">creatina 20</span><span class="chipg rep">placebo 20</span></div>
+<div class="cnt"><span class="f">Parece: <b>80</b> pessoas</span><span class="r">Na verdade: <b>60</b></span></div>
+<div class="lg">Estudo de 3 braços (5 g, 20 g e placebo). O controle tracejado é o mesmo grupo, contado de novo.</div></div>
+<div class="ex"><div class="tt">2. Vários desfechos das mesmas pessoas <span class="bad">problema</span></div>
+<div class="row"><span class="lb2">Estudo B (memória verbal)</span><span class="chipg">creatina 15</span><span class="chipg pl">placebo 15</span></div>
+<div class="row"><span class="lb2">Estudo B (memória visual)</span><span class="chipg rep">creatina 15</span><span class="chipg rep">placebo 15</span></div>
+<div class="row"><span class="lb2">Estudo B (memória de trabalho)</span><span class="chipg rep">creatina 15</span><span class="chipg rep">placebo 15</span></div>
+<div class="cnt"><span class="f">Parece: <b>90</b> pessoas</span><span class="r">Na verdade: <b>30</b></span></div>
+<div class="lg">Três testes feitos nas mesmas 30 pessoas, somados como se fossem três estudos. O mesmo vale para dois momentos (4 e 8 semanas) das mesmas pessoas.</div></div>
+<div class="ex"><div class="tt">3. Subgrupos com pessoas diferentes <span class="ok">ok</span></div>
+<div class="row"><span class="lb2">Estudo C (homens)</span><span class="chipg">creatina 12</span><span class="chipg pl">placebo 12</span></div>
+<div class="row"><span class="lb2">Estudo C (mulheres)</span><span class="chipg">creatina 10</span><span class="chipg pl">placebo 10</span></div>
+<div class="cnt"><span class="r">Parece: <b>44</b> · Na verdade: <b>44</b> ✓</span></div>
+<div class="lg">O estudo aparece duas vezes, mas cada pessoa entra uma vez só.</div></div>
+</div>
+<p style="margin:10px 0 2px"><b>Como conferir:</b> procure o mesmo autor e ano repetido no forest plot (“Silva 2019a/b”, “(5 g)”, “(memória)”), o mesmo n de controle nas linhas repetidas, e compare o total da metanálise com a soma dos participantes na tabela de estudos incluídos.</p>
+<p style="margin:6px 0 0"><b>Quando a repetição é aceitável:</b> se os autores juntaram os braços de intervenção num só, dividiram o grupo controle entre as comparações, escolheram um desfecho por estudo por uma regra definida antes, ou usaram um modelo próprio para dados dependentes (“multilevel”, “robust variance”).</p>
+</div></details>`;
+function renderMeta(st,c){const m=S.m;const q=(k,t,opts)=>`<div class="sub"><h4>${t}</h4><div class="opts" data-k="${k}">${opts.map(o=>optHTML(o,m[k]==o.v)).join('')}</div></div>`;
+ let h=head(st)+q('fez','Fez metanálise?',[{v:'sim',t:'Sim'},{v:'na',t:'Não fez metanálise',s:'Não conta como falha'}]);
+ if(m.fez=='sim'){
+  h+=`<div class="sub"><h4>Os métodos de combinação foram adequados?</h4><details><summary>O que conta como “sim”</summary><div class="in"><ul>${st.sim.map(x=>`<li>${x}</li>`).join('')}</ul></div></details><div class="opts" data-k="met">${[{v:'sim',t:'Sim'},{v:'nao',t:'Não'},NAO_ENC].map(o=>optHTML(o,m.met==o.v)).join('')}</div></div>`;
+  h+=`<div class="sub"><h4>Checagem do “N inflado”</h4>${VIS}</div>`;
+  h+=q('rep','Algum estudo aparece mais de uma vez no mesmo forest plot?',[{v:'nao',t:'Não'},{v:'sim',t:'Sim'}]).replace('</h4>','<small style="display:block;font-weight:600;color:var(--mu);font-size:13px">Conte quantas vezes cada estudo aparece no mesmo gráfico. Em revisões com esse erro, um mesmo estudo pode aparecer 5, 7 vezes.</small></h4>');
+  if(m.rep=='sim'){h+=q('dif','As linhas repetidas são de pessoas diferentes?',[{v:'sim',t:'Sim',s:'Ex.: homens e mulheres relatados separadamente'},{v:'nao',t:'Não',s:'Mesmo controle, ou mesmas pessoas com desfechos ou tempos diferentes'},{v:'ns',t:'Não sei dizer'}]);
+   if(m.dif&&m.dif!='sim')h+=q('trat','Os autores explicaram como trataram essa repetição?',[{v:'sim',t:'Sim',s:'Juntaram braços, dividiram o controle, um desfecho por estudo ou modelo para dados dependentes'},{v:'nao',t:'Não'}]);}
+  h+=`<div class="sub">${chkHTML('nmaior','O total da metanálise é maior que a soma dos participantes dos estudos','Compare com a tabela de estudos incluídos',!!m.nmaior)}</div>`;
+  if(inflado())h+=`<div class="warn"><b>Possível N inflado:</b> as mesmas pessoas parecem entrar mais de uma vez no resultado. O intervalo de confiança fica estreito demais e o efeito parece mais sólido do que é: o resultado pode parecer preciso <i>só por causa</i> da contagem dupla. O item fica como “Não”.</div>`;
+ }
+ const r=resp(st);h+=(r?`<div class="calc">Resposta deste item: ${pill(r)}</div>`:'')+nav(metaOk())+`<div class="note">Item ${st.n} do AMSTAR 2.</div>`;
+ c.innerHTML=h;
+ c.querySelectorAll('.opts[data-k]').forEach(g=>g.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const k=g.dataset.k;m[k]=b.dataset.v;
+   if(k=='fez'&&m.fez=='na'){}if(k=='rep'&&m.rep=='nao'){delete m.dif;delete m.trat}if(k=='dif'&&m.dif=='sim')delete m.trat;
+   render()}));
+ const nb=c.querySelector('.chk[data-k=nmaior]');if(nb)nb.onclick=()=>{m.nmaior=!m.nmaior;render()};
+ wire();}
+
+const INV={
+ i9:{intro:'Avaliar o risco de viés não basta: o julgamento precisa estar certo. Três checagens rápidas:',qs:[
+  {k:'verde',t:'Quase todos os julgamentos são de baixo risco (verde), mesmo com estudos pequenos?',s:'Não prova erro, mas é incomum em ensaios pequenos. Confira a justificativa.',o:[['sim','Sim'],['nao','Não']],flag:v=>v=='sim'?'Risco de viés “verde demais”: confira se a revisão explica cada julgamento.':''},
+  {k:'reg',t:'Quantos estudos incluídos tinham protocolo registrado antes de começar?',s:'Procure a frase sobre registro (ClinicalTrials.gov, CTRI, ReBEC…) na revisão ou nos estudos.',o:[['todos','Todos'],['alguns','Alguns'],['nenhum','Nenhum'],['ni','Não informado']]},
+  {k:'sel',t:'No domínio de relato seletivo, a revisão marcou baixo risco para estudos sem protocolo registrado?',s:'Relato seletivo se julga comparando com o protocolo registrado antes do estudo, não com a seção de métodos do próprio artigo. Sem protocolo, não há com o que comparar.',o:[['sim','Sim'],['nao','Não'],['ns','Não sei']],show:()=>S.iv.reg&&S.iv.reg!='todos',flag:v=>v=='sim'?'Relato seletivo julgado de forma otimista: o risco de viés dos estudos provavelmente é maior do que a revisão mostra.':''}]},
+ a3:{intro:'Estatisticamente significativo não significa relevante na prática. Para julgar se o efeito importa para o paciente:',calc:true,qs:[]}
+};
+function invOpen(id){return S.op[id]?' open':''}
+function invHTML(st){const d=INV[st.id];if(!d)return '';let h=`<details class="inv" data-id="${st.id}"${invOpen(st.id)}><summary>Investigue mais</summary><div class="in"><p style="margin:4px 0 6px">${d.intro}</p>`;
+ d.qs.forEach(q=>{if(q.show&&!q.show())return;const v=S.iv[q.k];h+=`<div class="iq">${q.t}${q.s?`<small>${q.s}</small>`:''}</div><div class="mini" data-k="${q.k}">${q.o.map(([ov,ot])=>`<button class="${v==ov?'sel':''}" data-v="${ov}">${ot}</button>`).join('')}</div>`;
+  const f=q.flag&&v?q.flag(v):'';if(f)h+=`<div class="flag">⚠ ${f}</div>`;});
+ if(d.calc){h+=EFGUIDE;}
+ return h+'</div></details>';}
+function num(x){const n=parseFloat(String(x).replace(',','.'));return isNaN(n)?null:n}
+function calcOut(){const o=$('#out');if(!o)return;const a=num(S.iv.smd),b=num(S.iv.dp),m=num(S.iv.dmi);
+ if(a==null||b==null){o.innerHTML='Preencha a SMD e o desvio-padrão.';return}
+ const d=Math.abs(a*b);let t=`Diferença aproximada: <b>${d.toFixed(1).replace('.',',')} pontos</b> na escala.`;
+ if(m!=null&&m>0)t+=d>=m?`<br>Atinge a diferença mínima importante (${String(m).replace('.',',')}).`:`<br>Fica abaixo da diferença mínima importante (${String(m).replace('.',',')}): pode não ser perceptível para o paciente.`;
+ o.innerHTML=t;}
+function wireInv(c){c.querySelectorAll('details.inv').forEach(d=>d.addEventListener('toggle',()=>{S.op[d.dataset.id]=d.open}));
+ c.querySelectorAll('.inv .mini').forEach(g=>g.querySelectorAll('button').forEach(b=>b.onclick=()=>{S.iv[g.dataset.k]=b.dataset.v;render()}));
+ }
+function autoAlerts(){const a=[];if(inflado())a.push(['ninf','Possível N inflado: as mesmas pessoas entram mais de uma vez na metanálise']);
+ if(S.iv.verde=='sim')a.push(['verde','Risco de viés “verde demais” para estudos pequenos']);
+ if(S.iv.sel=='sim'&&S.iv.reg&&S.iv.reg!='todos')a.push(['selv','Relato seletivo julgado de forma otimista (estudos sem protocolo registrado marcados como baixo risco)']);
+ const g=S.g||{};if(g.fez=='nao')a.push(['gno','Não avaliou a certeza da evidência']);
+ if(g.fez=='sim'){if(g.just=='nao')a.push(['gju','Certeza da evidência sem justificativa dos julgamentos']);if(g.dom=='nao')a.push(['gdo','Certeza da evidência: faltou algum domínio (ex.: viés de publicação)']);if(g.coer=='nao')a.push(['gco','Julgamentos de certeza não combinam com os problemas encontrados']);if(g.conc=='nao')a.push(['gcc','A conclusão não menciona a certeza da evidência'])}
+ return a;}
+
+function renderGrade(c){const g=S.g||(S.g={});const Q=(k,t,sub,o)=>`<div class="sub"><h4>${t}${sub?`<small style="display:block;font-weight:600;color:var(--mu);font-size:13px">${sub}</small>`:''}</h4><div class="opts" data-k="${k}">${o.map(x=>optHTML(x,g[k]==x.v)).join('')}</div></div>`;
+ const SN=[{v:'sim',t:'Sim'},{v:'nao',t:'Não'}];
+ let h=`<span class="tag al">Certeza da evidência</span><h2>A revisão disse quão confiável é o resultado?</h2>
+ <p class="why">Uma revisão bem feita não entrega só o tamanho do efeito: diz quanta certeza se pode ter nele. O sistema mais usado é o GRADE, que classifica a certeza em alta, moderada, baixa ou muito baixa.</p>
+ <details><summary>Onde olhar no artigo</summary><div class="in">Tabela “Summary of findings” ou “certainty of evidence”, geralmente perto dos resultados principais, e a conclusão do resumo.</div></details>
+ <div class="dica">Esta etapa não faz parte do AMSTAR 2 e não muda a classificação. Os problemas encontrados entram como sinais de alerta.</div>`;
+ h+=Q('fez','Avaliou a certeza da evidência (ex.: GRADE)?','',SN);
+ if(g.fez=='sim'){
+  h+=Q('just','Justificou cada julgamento?','Por que rebaixou, ou por que não rebaixou, em cada domínio.',SN);
+  h+=Q('dom','Considerou os 5 domínios?','Risco de viés, inconsistência, evidência indireta, imprecisão e viés de publicação. É comum um deles simplesmente sumir da tabela.',[{v:'sim',t:'Sim, os 5'},{v:'nao',t:'Faltou algum'}]);
+  h+=Q('coer','Os julgamentos combinam com o que você viu nos itens anteriores?','Ex.: não rebaixou por risco de viés, mas os estudos têm problemas; não rebaixou por imprecisão, mas o N estava inflado.',[{v:'sim',t:'Sim'},{v:'nao',t:'Não'},{v:'ns',t:'Não sei avaliar'}]);
+  h+=Q('conc','A conclusão menciona essa certeza?','Ex.: “evidência de baixa certeza sugere…” em vez de só “melhora o sono”.',SN);
+  if(inflado())h+=`<div class="flag">⚠ Você encontrou N inflado no item 11. Se a revisão não rebaixou por imprecisão, esse julgamento provavelmente está errado: a precisão vinha da contagem dupla.</div>`;
+  if(S.iv.sel=='sim')h+=`<div class="flag">⚠ Você encontrou relato seletivo julgado de forma otimista. Se a revisão não rebaixou por risco de viés, confira com cuidado.</div>`;
+ }
+ const ok=g.fez=='nao'||(g.fez=='sim'&&g.just&&g.dom&&g.coer&&g.conc);
+ h+=nav(ok);c.innerHTML=h;
+ c.querySelectorAll('.opts[data-k]').forEach(o=>o.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{g[o.dataset.k]=b.dataset.v;render()}));wire();}
+
+
+const K={mode:null,unit:'',dir:'up',side:'neg',rows:[{a:'',b:''},{a:'',b:''},{a:'',b:''}],smd:'',lo:'',hi:'',sd1:'',sd2:'',mid:'',ck1:false,ck2:false};
+function f1(x){return (Math.round(x*10)/10).toFixed(1).replace('.',',').replace('-','−')}
+const SDFIG=`<table class="sdf"><tr><th rowspan="2">Estudo</th><th colspan="3">Intervenção</th><th colspan="3">Placebo</th></tr><tr><th>Mean</th><th>SD</th><th>Total</th><th>Mean</th><th class="hl">SD</th><th>Total</th></tr>
+<tr><td>Estudo A</td><td>6,1</td><td>2,0</td><td>40</td><td>7,9</td><td class="hl">2,4</td><td>40</td></tr><tr><td>Estudo B</td><td>5,4</td><td>1,8</td><td>25</td><td>6,8</td><td class="hl">2,1</td><td>24</td></tr></table>`;
+function calcHTML(){const B=(k,v,t)=>`<button data-ck="${k}" data-cv="${v}" class="${K[k]==v?'on':''}">${t}</button>`;
+ let h=`<div class="kc"><div class="kq">Os estudos desse resultado usam a mesma unidade (minutos, %, pontos da mesma escala)?</div><div class="kb">${B('mode','dir','Sim: ler a diferença direta')}${B('mode','smd','Não: converter a SMD')}</div>`;
+ if(!K.mode)return h+'</div>';
+ h+=`<div class="kg2"><div><label>Unidade</label><input data-kf="unit" value="${esc(K.unit)}" placeholder="Ex.: minutos, pontos, %"></div><div><label>Na escala, é melhor um valor…</label><div class="kb">${B('dir','up','Maior')}${B('dir','down','Menor')}</div></div></div>`;
+ if(K.mode=='dir'){
+  h+=`<p class="kn">Digite as médias finais de cada estudo, como aparecem no forest plot. Se a revisão inverteu o sinal (valores negativos), digite sem o sinal.</p><div class="krows"><div class="kh"><span>Intervenção</span><span>Controle</span><span>Diferença</span></div>`;
+  K.rows.forEach((r,i)=>{h+=`<div class="kr"><input data-kr="${i}" data-kc="a" value="${esc(r.a)}" inputmode="decimal" placeholder="Média"><input data-kr="${i}" data-kc="b" value="${esc(r.b)}" inputmode="decimal" placeholder="Média"><span class="kd" data-kd="${i}"></span></div>`});
+  h+=`</div><button class="kadd" data-kadd="1">+ estudo</button>`;
+ }else{
+  h+=`<div class="kwarn"><div class="kq" style="margin:0 0 6px">Antes de converter, confirme:</div>
+   <button class="kchk${K.ck1?' on':''}" data-kt="ck1"><span class="bx">${K.ck1?'✓':''}</span><span>O resultado combina <b>uma única medida</b> (não junta, por exemplo, minutos de sono com escores de questionário).</span></button>
+   <button class="kchk${K.ck2?' on':''}" data-kt="ck2"><span class="bx">${K.ck2?'✓':''}</span><span>Cada estudo aparece <b>uma vez só</b> nesse resultado.</span></button>
+   ${!(K.ck1&&K.ck2)?'<div class="flag">⚠ Sem essas duas condições, a conversão herda a distorção do resultado. Use com muita cautela.</div>':''}</div>
+  <div class="kg3"><div><label>SMD</label><input data-kf="smd" value="${esc(K.smd)}" inputmode="decimal" placeholder="Ex.: -0,45"></div><div><label>IC 95%: limite inferior</label><input data-kf="lo" value="${esc(K.lo)}" inputmode="decimal" placeholder="Ex.: -0,69"></div><div><label>IC 95%: limite superior</label><input data-kf="hi" value="${esc(K.hi)}" inputmode="decimal" placeholder="Ex.: -0,21"></div></div>
+  <div><label>No forest plot, o lado que favorece a intervenção é o dos valores…</label><div class="kb">${B('side','neg','Negativos (à esquerda)')}${B('side','pos','Positivos (à direita)')}</div></div>
+  <div class="kg2"><div><label>DP da escala (menor encontrado)</label><input data-kf="sd1" value="${esc(K.sd1)}" inputmode="decimal" placeholder="Ex.: 41,5"></div><div><label>DP maior (opcional)</label><input data-kf="sd2" value="${esc(K.sd2)}" inputmode="decimal" placeholder="Para testar a faixa"></div></div>
+  <details class="ind kd2" data-k="sdh"><summary>Onde achar o DP?</summary><div class="in">No forest plot, cada estudo tem as colunas <b>Mean</b>, <b>SD</b> e <b>Total</b> para cada grupo. Use o <b>SD do grupo controle</b> de estudos que usaram a escala que você quer explicar. Se não estiver no gráfico, procure na Tabela 1 do estudo original (ex.: “12,4 ± 3,1”: o DP é 3,1).${SDFIG}<div class="note">Exemplo ilustrativo. Os DPs variam entre estudos: informar o menor e o maior mostra a faixa de resultados possíveis. Prefira o DP do mesmo tipo usado na metanálise (valores finais ou mudança).</div></div></details>`;
+ }
+ h+=`<div><label>Diferença mínima importante da escala (opcional)</label><input data-kf="mid" value="${esc(K.mid)}" inputmode="decimal" placeholder="Na mesma unidade"></div><div class="kout" data-kout="1"></div></div>`;
+ return h;}
+function kWord(b){const u=K.unit||'unidades',more=K.dir=='up'?'a mais':'a menos',less=K.dir=='up'?'a menos':'a mais';return b>=0?`${f1(Math.abs(b))} ${u} ${more}`:`${f1(Math.abs(b))} ${u} ${less}`}
+function kMid(L,U){const m=num(K.mid);if(m==null||m<=0)return '';
+ if(L>=m)return `<div class="kv ok">Todo o intervalo está acima da diferença mínima importante (${f1(m)}): efeito provavelmente relevante.</div>`;
+ if(U<m)return `<div class="kv bad">Todo o intervalo está abaixo da diferença mínima importante (${f1(m)}): efeito provavelmente pouco relevante para o paciente.</div>`;
+ return `<div class="kv mid">O intervalo cruza a diferença mínima importante (${f1(m)}): é incerto se o efeito é relevante.</div>`}
+function calcOut2(root){const o=root.querySelector('[data-kout]');if(!o)return;const sg=K.dir=='up'?1:-1;
+ if(K.mode=='dir'){const ds=K.rows.map((r,i)=>{const a=num(r.a),b=num(r.b);const sp=root.querySelector(`[data-kd="${i}"]`);if(a==null||b==null){if(sp)sp.textContent='';return null}const d=(a-b)*sg;if(sp)sp.textContent=(d>=0?'+':'−')+f1(Math.abs(d)).replace('−','');return d}).filter(x=>x!=null);
+  if(!ds.length){o.innerHTML='Preencha as médias de pelo menos um estudo.';return}
+  const mn=Math.min(...ds),mx=Math.max(...ds);let t=ds.length==1?`<p class="kp">No estudo, o grupo intervenção teve <b>${kWord(ds[0])}</b> que o controle.</p>`:`<p class="kp">Nos estudos, o grupo intervenção teve entre <b>${kWord(mn)}</b> e <b>${kWord(mx)}</b> que o controle.</p>`;
+  const m=num(K.mid);if(m!=null&&m>0){t+=mn>=m?`<div class="kv ok">Todos os estudos ficam acima da diferença mínima importante (${f1(m)}).</div>`:mx<m?`<div class="kv bad">Todos os estudos ficam abaixo da diferença mínima importante (${f1(m)}): efeito provavelmente pouco relevante.</div>`:`<div class="kv mid">Alguns estudos ficam acima e outros abaixo da diferença mínima importante (${f1(m)}).</div>`}
+  o.innerHTML=t+'<div class="note">“A mais / a menos” considera se um valor maior ou menor é melhor na escala. Valores positivos favorecem a intervenção.</div>';return}
+ const z=num(K.smd),lo=num(K.lo),hi=num(K.hi),s1=num(K.sd1),s2=num(K.sd2);
+ if(z==null||s1==null){o.innerHTML='Preencha a SMD e pelo menos um DP.';return}
+ const ben=x=>x*(K.side=='neg'?-1:1);
+ const sc=[s1,...(s2!=null&&s2!==s1?[s2]:[])].map(sd=>{const p=ben(z)*sd;let L=null,U=null;if(lo!=null&&hi!=null){const a=ben(lo)*sd,b=ben(hi)*sd;L=Math.min(a,b);U=Math.max(a,b)}return {sd,p,L,U}});
+ const fav=v=>v>=0?'favorece a intervenção':'favorece o controle';
+ let t=sc.map(c=>`<p class="kp">Com DP ${f1(c.sd)}: em média, cerca de <b>${f1(Math.abs(c.p))} ${K.unit||'unidades'}</b> de diferença, que ${fav(c.p)}${c.L!=null?` (IC 95%: de ${f1(c.L)} a ${f1(c.U)})`:''}.</p>`).join('');
+ const p0=sc[0];t+=`<div class="kpat"><b>Para o paciente:</b> “Em média, ${p0.p>=0?'quem usou a intervenção teve':'o grupo controle teve'} cerca de ${kWord(Math.abs(p0.p))}${sc.length>1?` (entre ${f1(Math.abs(sc[0].p))} e ${f1(Math.abs(sc[1].p))}, conforme o estudo de referência)`:''}.”</div>`;
+ if(p0.L!=null){if(p0.L<=0&&p0.U>=0)t+='<div class="kv mid">O intervalo inclui a ausência de efeito (zero).</div>';const Ls=Math.min(...sc.map(c=>c.L)),Us=Math.max(...sc.map(c=>c.U));t+=kMid(Ls,Us)}
+ o.innerHTML=t+'<div class="note">Aproximação: diferença ≈ SMD × DP. Valores positivos no IC favorecem a intervenção.</div>';}
+function wireCalc(root,rr){if(!root)return;
+ root.querySelectorAll('[data-ck]').forEach(b=>b.onclick=()=>{K[b.dataset.ck]=b.dataset.cv;rr()});
+ root.querySelectorAll('[data-kt]').forEach(b=>b.onclick=()=>{K[b.dataset.kt]=!K[b.dataset.kt];rr()});
+ root.querySelectorAll('[data-kadd]').forEach(b=>b.onclick=()=>{K.rows.push({a:'',b:''});rr()});
+ root.querySelectorAll('[data-kf]').forEach(i=>i.oninput=e=>{K[i.dataset.kf]=e.target.value;calcOut2(root)});
+ root.querySelectorAll('[data-kr]').forEach(i=>i.oninput=e=>{K.rows[+i.dataset.kr][i.dataset.kc]=e.target.value;calcOut2(root)});
+ calcOut2(root);}
+
+const MCIDFIG=(()=>{const W=340,x0=26,x1=320,sc=v=>x0+(v+1)/5*(x1-x0);const mid=2;
+ const rows=[['A',2.6,4.2,'#2E8A5E'],['B',0.8,3.4,'#B7791F'],['C',0.3,1.4,'#C8102E']];
+ let g=`<svg viewBox="0 0 ${W} 150" width="100%" style="max-width:420px;display:block;margin:6px auto"><line x1="${sc(0)}" y1="8" x2="${sc(0)}" y2="118" stroke="#8A6F7B" stroke-width="1.5"/><text x="${sc(0)}" y="132" font-size="11" text-anchor="middle" fill="#8A6F7B">0</text>
+ <line x1="${sc(mid)}" y1="8" x2="${sc(mid)}" y2="118" stroke="#D6125A" stroke-width="2" stroke-dasharray="5 4"/><text x="${sc(mid)}" y="132" font-size="11.5" font-weight="800" text-anchor="middle" fill="#D6125A">MCID</text><text x="${x1}" y="146" font-size="10.5" text-anchor="end" fill="#8A6F7B">mais benefício →</text>`;
+ rows.forEach(([n,l,u,c],i)=>{const y=28+i*36,m=(l+u)/2;g+=`<line x1="${sc(l)}" y1="${y}" x2="${sc(u)}" y2="${y}" stroke="${c}" stroke-width="4" stroke-linecap="round"/><rect x="${sc(m)-6}" y="${y-6}" width="12" height="12" fill="${c}"/><text x="4" y="${y+5}" font-size="13" font-weight="800" fill="#4A0F3A">${n}</text>`});
+ return g+`</svg><div class="mleg"><div><b style="color:#2E8A5E">A</b> Todo o intervalo acima da MCID: provavelmente relevante.</div><div><b style="color:#B7791F">B</b> O intervalo cruza a MCID: relevância incerta.</div><div><b style="color:#C8102E">C</b> Todo o intervalo abaixo da MCID: provavelmente pouco relevante, mesmo sendo “significativo”.</div></div>`})();
+const EFGUIDE=`<ol style="margin:4px 0 8px;padding-left:20px">
+<li><b>Coloque o efeito numa unidade que faça sentido.</b> Se os estudos usam a mesma escala, a revisão pode apresentar a diferença média (DM) diretamente, ou você pode subtrair as médias dos grupos no forest plot. Se o resultado estiver só em SMD (diferença média padronizada), uma aproximação é multiplicá-la pelo desvio-padrão (coluna SD) do grupo controle de um estudo que usou a escala que você conhece.</li>
+<li><b>Procure a diferença mínima clinicamente importante (MCID) dessa escala</b>, ou seja, a menor mudança que o paciente percebe como relevante. Fontes: estudos de validação da escala, diretrizes e a própria revisão (às vezes ela informa). Busca sugerida no PubMed:<div class="srch">"nome da escala" AND ("minimal clinically important difference" OR "minimal important difference" OR MCID)</div>A MCID pode variar conforme a população e o método de estimativa; prefira uma obtida em população parecida com a do seu paciente.</li>
+<li><b>Compare o efeito e o intervalo de confiança com a MCID</b>, e não apenas a média:</li></ol>${MCIDFIG}
+<ol start="4" style="margin:4px 0 0;padding-left:20px"><li><b>Traduza para o paciente</b>, em termos absolutos: “em média, cerca de X a mais/a menos, numa escala de 0 a Y”. Considere também quanto o grupo placebo melhorou, o custo e o tempo de uso.</li></ol>`;
+
+const SGFIG=(()=>{const sc=v=>10+(v+16)/20*200;const ci=(l,u,m,dia)=>{let g=`<svg width="220" height="18" viewBox="0 0 220 18"><line x1="${sc(0)}" y1="0" x2="${sc(0)}" y2="18" stroke="#B9A6AE" stroke-width="1"/>`;
+ if(dia)g+=`<polygon points="${sc(l)},9 ${sc(m)},3 ${sc(u)},9 ${sc(m)},15" fill="#4A0F3A"/>`;else g+=`<line x1="${sc(l)}" y1="9" x2="${sc(u)}" y2="9" stroke="#7A1236" stroke-width="2"/><rect x="${sc(m)-3.5}" y="5.5" width="7" height="7" fill="#2E8A5E"/>`;return g+'</svg>'};
+ const r=(n,e,l,u,cls='')=>`<tr class="${cls}"><td>${n}</td><td>${e}</td><td class="sv">${ci(l,u,e.startsWith('−')?-parseFloat(e.slice(1).replace(',','.')):0,cls=='sub'||cls=='tot')}</td></tr>`;
+ return `<div class="sgw"><table class="sgt"><tr><th>Estudo</th><th>DM</th><th></th></tr>
+ <tr class="h"><td colspan="3">Subgrupo A · dose &lt; 1 g</td></tr>
+ ${r('Estudo 1','−2,4',-6.3,1.5)}${r('Estudo 2','−3,2',-5.7,-0.7)}${r('Estudo 3','−5,6',-6.5,-4.7)}
+ ${r('<b>Subtotal A</b>','−4,2',-6.3,-2.2,'sub')}<tr class="t"><td colspan="3">Test for overall effect: <b>p &lt; 0,001</b> <span>→ o efeito em A é diferente de zero</span></td></tr>
+ <tr class="h"><td colspan="3">Subgrupo B · dose &gt; 1 g</td></tr>
+ ${r('Estudo 4','−5,8',-12.8,1.3)}${r('Estudo 5','−12,1',-12.8,-11.4)}
+ ${r('<b>Subtotal B</b>','−9,9',-15.8,-4.0,'sub')}<tr class="t"><td colspan="3">Test for overall effect: <b>p = 0,001</b> <span>→ o efeito em B é diferente de zero</span></td></tr>
+ ${r('<b>Total</b>','−6,0',-10.3,-1.6,'tot')}
+ <tr class="key"><td colspan="3">Test for subgroup differences: <b>p = 0,08</b></td></tr></table>
+ <div class="sgcall">⬆ <b>É esta linha que compara A com B.</b> Com p = 0,08, não há evidência de que os grupos sejam diferentes, embora B pareça ter um efeito maior.</div>
+ <div class="note" style="margin-top:4px">Exemplo ilustrativo, com estudos fictícios. DM = diferença média; valores negativos favorecem a intervenção.</div></div>`})();
+const ROBFIG=(()=>{const L={'+':['#2E8A5E','+'],'?':['#E3B21B','?'],'-':['#C8102E','−']};
+ const st=['A','B','C','D','E'],d=['D1','D2','D3','D4','D5','Geral'];
+ const g=[['+','+','+','+','+','+'],['+','?','+','+','+','?'],['+','+','+','-','?','-'],['?','+','?','+','+','?'],['+','+','+','+','?','?']];
+ let h='<table class="robg"><tr><th></th><th colspan="5" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)">Estudos</th></tr><tr><th></th>'+st.map(x=>`<th>${x}</th>`).join('')+'</tr>';
+ d.forEach((dd,j)=>{h+=`<tr${dd=='Geral'?' class="gr"':''}><th>${dd}</th>`+g.map(c=>{const [col,sym]=L[c[j]];return `<td><span style="background:${col}">${sym}</span></td>`}).join('')+'</tr>'});
+ h+='</table><div class="robl"><span><i style="background:#2E8A5E">+</i>Baixo risco</span><span><i style="background:#E3B21B">?</i>Algumas preocupações</span><span><i style="background:#C8102E">−</i>Alto risco</span></div><div class="robl" style="font-weight:600">D1 processo de randomização · D2 desvios das intervenções pretendidas · D3 dados de desfecho ausentes · D4 mensuração do desfecho · D5 seleção do resultado relatado</div>';return h})();
+const QS=[
+ {t:'Registro',w:'resumo, métodos, PROSPERO',it:[
+  {id:'r1',c:1,q:'Tem protocolo registrado antes de começar?',h:'Procure “PROSPERO”, “registration” ou um número CRD nos métodos.',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> registro público (ex.: PROSPERO) feito antes do início da revisão.</div><div><span class="wk pb">Problema</span> registro feito depois de a revisão começar, ou só um “protocolo interno” sem registro público.</div><div><span class="wk na">Não achei</span> nenhuma menção a protocolo ou registro.</div></div>',x:'O protocolo é o plano da revisão, escrito antes de começar: a pergunta, como buscar, quais estudos incluir e como analisar. Registrá-lo publicamente (ex.: no PROSPERO) impede que os autores mudem o plano depois de ver os resultados. Confira se a data do registro é anterior ao início da revisão.'},
+  {id:'r2',jd:1,q:'O artigo segue o que foi registrado?',h:'Compare o registro com o artigo publicado.',na:'Não tem registro',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> pergunta, critérios, desfechos e análises iguais ao registro, ou mudanças explicadas.</div><div><span class="wk pb">Problema</span> mudanças não explicadas (ex.: desfecho principal trocado, análise nova sem justificativa).</div><div><span class="wk sa">Não sei avaliar</span> quando não dá para julgar com o que o artigo mostra.</div></div>',x:'Abra o registro (o número ou link costuma estar nos métodos) e veja se a pergunta, os critérios, os desfechos e as análises são os mesmos do artigo. Mudar é permitido, mas precisa estar explicado. Mudança sem explicação pode indicar que a análise foi ajustada para chegar ao resultado desejado.'}]},
+ {t:'Busca',w:'métodos e material suplementar',it:[
+  {id:'b1',c:1,q:'A busca foi ampla o suficiente?',h:'Quantas bases? Buscou também fora delas? Restringiu idioma ou data?',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> 2 ou mais bases relevantes, estratégia reproduzível e restrições justificadas.</div><div><span class="wk pb">Problema</span> menos de 2 bases, restrição de idioma ou data sem justificativa, ou termos de busca insuficientes.</div><div><span class="wk na">Não achei</span> bases ou estratégia de busca não relatadas.</div></div>',x:'Ideal: pelo menos 3 bases, principalmente MEDLINE, Embase e CENTRAL (o mínimo aceito pelo AMSTAR 2 é 2 bases relevantes). Além delas, literatura cinzenta (ex.: teses e preprints, que podem ser buscados no OpenAlex) e registros de ensaios (ex.: ClinicalTrials.gov), onde aparecem estudos não publicados. Restringir a estudos em inglês ou a um período, sem justificar, pode deixar estudos de fora. A estratégia de busca deve estar descrita a ponto de você conseguir refazê-la.'},
+  {id:'b2',q:'A busca é recente?',h:'Compare a data da última busca com a data de publicação.',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> busca feita (ou refeita) até 12 meses antes da publicação.</div><div><span class="wk pb">Problema</span> busca feita mais de 12 meses antes da publicação.</div><div><span class="wk na">Não achei</span> data da última busca não informada.</div></div>',x:'A data da busca fica nos métodos. Esta ferramenta adota o critério da Cochrane: a busca deve ter sido feita, ou refeita, até 12 meses antes da publicação. Se passou mais tempo, estudos novos podem ter ficado de fora. Ex.: busca até março de 2022 e revisão publicada em agosto de 2023.<div class="robc" style="border-color:var(--am2);background:#FFF6E6;margin-top:8px"><b style="color:var(--am)">⚠ Atenção:</b> o AMSTAR 2 é mais tolerante e aceita busca feita até 24 meses antes da conclusão da revisão. Muitas revisões fora da Cochrane não cumprem os 12 meses. Nesses casos, verifique se surgiram estudos relevantes no intervalo antes de descartar a revisão.</div>'},
+  {id:'b3',jd:1,q:'Algum estudo importante ficou de fora?',h:'Compare com outras revisões sobre o mesmo tema.',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> os estudos que você conhece sobre o tema estão incluídos ou têm exclusão justificada.</div><div><span class="wk pb">Problema</span> ensaios relevantes ficaram de fora sem justificativa.</div><div><span class="wk sa">Não sei avaliar</span> quando não dá para julgar com o que o artigo mostra.</div></div>',x:'Procure revisões anteriores sobre a mesma pergunta (o Epistemonikos e o Trip ajudam). Se uma revisão mais nova tem menos estudos que uma antiga, ou não inclui um ensaio grande e conhecido, desconfie.'}]},
+ {t:'Pergunta e critérios',w:'métodos',it:[
+  {id:'c1',q:'Dá para saber com certeza se um estudo entra ou não?',h:'Os critérios de inclusão e exclusão são claros?',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> critérios específicos, que permitem decidir sem ambiguidade se um estudo entra.</div><div><span class="wk pb">Problema</span> critérios vagos, que deixam margem para escolher estudos a dedo.</div><div><span class="wk na">Não achei</span> critérios de inclusão e exclusão não descritos.</div></div>',x:'Critérios vagos deixam margem para escolher estudos a dedo. Ex.: uma revisão com objetivo de avaliar o efeito do exercício físico sobre a qualidade do sono em adultos saudáveis exclui estudos com participantes que tenham “condição médica diagnosticada”. Obesidade conta? E hipertensão controlada com medicamento? Se o critério não define, os autores podem aplicar a regra só quando convém: excluir um estudo com resultado desfavorável e manter outro, semelhante, com resultado favorável.'},
+  {id:'c2',jd:1,q:'Os estudos incluídos respondem à pergunta do título?',h:'Confira a população e como o desfecho foi medido.',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> população e desfechos coerentes com o título e com a pergunta.</div><div><span class="wk pb">Problema</span> população ou desfechos diferentes do que o título promete.</div><div><span class="wk sa">Não sei avaliar</span> quando não dá para julgar com o que o artigo mostra.</div></div>',x:'Ex.: uma revisão sobre vitamina D em depressão incluiu pessoas sem depressão e juntou todos no resultado principal. Veja também se as escalas medem mesmo o desfecho: uma escala de qualidade de vida não é uma escala de depressão.'}]},
+ {t:'Seleção',w:'fluxograma e material suplementar',it:[
+  {id:'s1',c:1,q:'Existe a lista dos estudos excluídos, com o motivo de cada um?',h:'Geralmente fica no material suplementar.',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> lista nominal dos excluídos, cada um com um motivo plausível.</div><div><span class="wk pb">Problema</span> lista existe, mas com motivos vagos, fora dos critérios ou sem motivo para cada estudo.</div><div><span class="wk na">Não achei</span> não há lista, só os números do fluxograma.</div></div>',x:'Os números do fluxograma não bastam: é preciso a lista com o nome de cada estudo excluído e o motivo. Desconfie de motivos vagos (“outros motivos”), de motivos que não estavam nos critérios e de exclusões só por idioma.'}]},
+ {t:'Risco de viés',w:'tabela ou figura dos estudos incluídos',it:[
+  {id:'v1',c:1,q:'Avaliou o risco de viés de cada estudo com uma ferramenta validada?',h:'Ensaios randomizados: RoB 2. Estudos não randomizados: ROBINS-I. Procure a tabela ou figura de risco de viés.',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> ferramenta validada (RoB 2, ROBINS-I, RoB 1) aplicada a cada estudo.</div><div><span class="wk pb">Problema</span> ferramenta inadequada (ex.: escala de pontos) ou aplicada só a parte dos estudos.</div><div><span class="wk na">Não achei</span> a revisão não avaliou o risco de viés.</div></div>',x:'Risco de viés é a chance de o resultado de um estudo estar distorcido por falhas no delineamento, na condução ou na análise. A avaliação deve usar uma ferramenta validada e ser feita para cada estudo incluído: o <b>RoB 2</b> (Cochrane) para ensaios clínicos randomizados e o <b>ROBINS-I</b> para estudos não randomizados. Escalas que somam pontos (ex.: escala de Jadad) não substituem essas ferramentas.<div class="robfig">'+ROBFIG+'</div><div class="note" style="margin-top:4px">Exemplo ilustrativo com estudos fictícios. Cada coluna é um estudo; cada linha, um domínio do RoB 2. A última linha é o julgamento geral do estudo.</div>'},
+  {id:'v2',jd:1,na:'Não avaliou',q:'O julgamento do risco de viés foi adequado?',h:'Confira a justificativa dos julgamentos em pelo menos um ou dois estudos, domínio por domínio.',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> julgamentos justificados e coerentes com o que os estudos relatam.</div><div><span class="wk pb">Problema</span> julgamentos generosos demais ou sem justificativa. Ex.: os autores julgam como baixo risco de viés o domínio de seleção do resultado relatado, mas o ensaio clínico original não registrou protocolo (por exemplo, no ClinicalTrials.gov). Sem o registro, não há como conferir se algum resultado foi omitido.</div><div><span class="wk sa">Não sei avaliar</span> quando não dá para julgar com o que o artigo mostra.</div></div>',x:`<p style="margin:2px 0 6px"><b>Como conferir, em 3 passos:</b></p><ol style="margin:0 0 8px;padding-left:20px">
+<li><b>Há justificativa por domínio?</b> Uma revisão adequada explica cada julgamento, geralmente numa tabela suplementar. Apenas as cores, sem justificativa, não permitem conferência.</li>
+<li><b>Confira os domínios mais frequentemente subestimados</b> (veja o guia abaixo): D5 (seleção do resultado relatado), D2 e D4 quando o desfecho é subjetivo e não houve cegamento.</li>
+<li><b>Verifique a coerência do julgamento geral.</b> No RoB 2, o estudo só é “baixo risco” se todos os domínios forem baixo risco, e é “alto risco” se qualquer domínio for alto risco ou se houver algumas preocupações em vários domínios.</li></ol>
+<div class="robc" style="border-color:var(--am2);background:#FFF6E6"><b style="color:var(--am)">⚠ Atenção:</b> predomínio de baixo risco em ensaios pequenos é incomum e merece conferência mais cuidadosa.</div>
+<details class="rob ind" data-k="robg"><summary>Guia rápido do RoB 2: domínios e perguntas-chave</summary><div class="in">
+<div class="robc" style="border-color:var(--mg);background:#fff"><div class="rt">Como usar este guia</div><div>O guia serve para conferir o julgamento que a revisão fez dos <b>estudos individuais incluídos</b>. Não é preciso reavaliar todos. Escolha um ou dois:</div><ul style="margin:4px 0 4px;padding-left:18px"><li>o estudo com <b>maior peso</b> na metanálise (coluna “Weight” do forest plot), que mais influencia o resultado;</li><li>um estudo julgado como <b>baixo risco em todos os domínios</b>, para checar se o julgamento se sustenta.</li></ul><div>Abra o artigo original desse estudo e responda às perguntas-chave de cada domínio. Se o seu julgamento divergir do da revisão, marque <b>Problema</b>.</div></div>
+<div class="robc"><div class="rt">D1 · Viés decorrente do processo de randomização</div><div class="rq">Perguntas-chave</div><ul><li>A sequência de alocação foi aleatória?</li><li>A sequência foi ocultada até a inclusão e a alocação dos participantes?</li><li>As diferenças entre os grupos na linha de base sugerem problema na randomização?</li></ul><div><b>Sinal de alerta:</b> Alocação por alternância, data de nascimento ou prontuário; ocultação da alocação não descrita; desequilíbrios importantes na linha de base.</div></div><div class="robc"><div class="rt">D2 · Viés devido a desvios das intervenções pretendidas</div><div class="rq">Perguntas-chave</div><ul><li>Participantes e profissionais que aplicaram a intervenção conheciam o grupo alocado?</li><li>Houve desvios da intervenção pretendida decorrentes do contexto do estudo, com provável efeito no desfecho?</li><li>A análise estimou adequadamente o efeito da alocação (análise por intenção de tratar)?</li></ul><div><b>Sinal de alerta:</b> Ausência de cegamento com desfecho subjetivo; exclusão de participantes da análise ou análise apenas por protocolo.</div></div><div class="robc"><div class="rt">D3 · Viés devido a dados de desfecho ausentes</div><div class="rq">Perguntas-chave</div><ul><li>Os dados do desfecho estavam disponíveis para todos, ou quase todos, os participantes randomizados?</li><li>Há evidência de que o resultado não foi enviesado pelos dados ausentes?</li><li>A ausência dos dados pode depender do próprio valor do desfecho?</li></ul><div><b>Sinal de alerta:</b> Perdas expressivas ou desiguais entre os grupos, sem análise de sensibilidade; motivos de perda relacionados ao desfecho (ex.: abandono por falta de melhora).</div></div><div class="robc"><div class="rt">D4 · Viés na mensuração do desfecho</div><div class="rq">Perguntas-chave</div><ul><li>O método de mensuração do desfecho foi apropriado?</li><li>A mensuração pode ter diferido entre os grupos?</li><li>Os avaliadores do desfecho conheciam a intervenção recebida? Se sim, esse conhecimento pode ter influenciado a avaliação?</li></ul><div><b>Sinal de alerta:</b> Desfecho autorrelatado (dor, sono, sintomas) em estudo sem cegamento dos participantes: nesse caso, o próprio participante é o avaliador.</div></div><div class="robc"><div class="rt">D5 · Viés na seleção do resultado relatado</div><div class="rq">Perguntas-chave</div><ul><li>Os dados foram analisados conforme um plano de análise pré-especificado, finalizado antes do acesso aos resultados?</li><li>O resultado pode ter sido selecionado entre várias mensurações possíveis (escalas, definições, momentos)?</li><li>O resultado pode ter sido selecionado entre várias análises possíveis dos dados?</li></ul><div><b>Sinal de alerta:</b> Ausência de protocolo ou plano de análise registrado antes do início, em um desfecho com várias escalas, momentos ou análises possíveis. Nessa situação, o julgamento de baixo risco não se sustenta.</div></div><div class="robc" style="border-color:var(--mg)"><div class="rt">Julgamento geral do estudo</div><div><b>Baixo risco:</b> todos os domínios com baixo risco. <b>Algumas preocupações:</b> ao menos um domínio com algumas preocupações e nenhum com alto risco. <b>Alto risco:</b> ao menos um domínio com alto risco, ou algumas preocupações em vários domínios, de forma que reduza substancialmente a confiança no resultado.</div></div><p style="margin:8px 0 0" class="note">Baseado na ferramenta RoB 2 da Cochrane (Sterne et al., <i>BMJ</i> 2019;366:l4898), com perguntas resumidas. Para estudos não randomizados, o ROBINS-I tem 7 domínios, e o principal é o <b>confundimento</b>. Em estudos observacionais nutricionais, avalie também a medida da exposição: ex.: consumo estimado por um único recordatório de 24 horas é pouco confiável.</p></div></details>`}]},
+ {t:'Resultados',w:'forest plot',it:[
+  {id:'m1',jd:1,c:1,q:'Cada participante foi contado uma vez só?',h:'Veja se o mesmo estudo se repete no gráfico da metanálise.',na:'Não fez metanálise',vis:1,
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> cada estudo aparece uma vez por análise e o total bate com a soma dos participantes.</div><div><span class="wk pb">Problema</span> estudo repetido no mesmo gráfico ou total maior que a soma dos participantes.</div><div><span class="wk sa">Não sei avaliar</span> quando não dá para julgar com o que o artigo mostra.</div></div>',x:'No gráfico da metanálise (forest plot), veja se o mesmo estudo aparece várias vezes, e compare o total de participantes da metanálise com a soma dos participantes dos estudos. Se o total for maior, há pessoas contadas duas vezes, e o resultado parece mais preciso do que é.'},
+  {id:'m2',jd:1,c:1,q:'Faz sentido juntar esses estudos num resultado só?',h:'Os estudos são parecidos entre si?',na:'Não fez metanálise',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> estudos parecidos o bastante e heterogeneidade investigada.</div><div><span class="wk pb">Problema</span> estudos incompatíveis somados (desenhos, populações ou desfechos diferentes) ou heterogeneidade alta ignorada.</div><div><span class="wk sa">Não sei avaliar</span> quando não dá para julgar com o que o artigo mostra.</div></div>',x:'Compare desenho, dose, duração, população e forma de medir o desfecho. Ensaios clínicos e estudos transversais não devem ser somados. Se os resultados dos estudos variam muito entre si (heterogeneidade), os autores precisam explicar por quê.'},
+  {id:'m3',c:1,q:'Os autores checaram se faltam estudos não publicados?',h:'Com 10 ou mais estudos: gráfico de funil (funnel plot) ou teste de Egger. Com menos: busca em registros de ensaios e discussão dos sinais de viés de publicação.',na:'Não fez metanálise',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> teste com 10 ou mais estudos, ou, com menos, busca em registros e discussão dos sinais de viés.</div><div><span class="wk pb">Problema</span> com 10 ou mais estudos, não testou; ou, com menos, só disse que “não foi possível avaliar”.</div><div><span class="wk na">Não achei</span> o viés de publicação não é mencionado.</div></div>',x:`<p style="margin:2px 0 6px">Estudos com resultado positivo são publicados com mais frequência, o que faz o efeito parecer maior do que é (viés de publicação).</p>
+<p style="margin:0 0 4px"><b>Com 10 ou mais estudos na metanálise:</b> espere o gráfico de funil ou o teste de Egger, e a discussão do resultado. Abaixo de 10 estudos esses testes têm pouco poder, e não fazê-los é o correto.</p>
+<p style="margin:8px 0 4px"><b>Com menos de 10 estudos, marque OK se a revisão:</b></p><ol style="margin:0 0 6px;padding-left:20px">
+<li>Buscou estudos não publicados em <b>registros de ensaios</b> (ex.: ClinicalTrials.gov, ICTRP);</li>
+<li>Discutiu os <b>sinais indiretos</b>: estudos todos pequenos e positivos, financiamento do fabricante, ensaios registrados que nunca foram publicados;</li>
+<li>Considerou essa possibilidade na <b>certeza da evidência</b>.</li></ol>
+<p style="margin:0">Marque <b>Problema</b> se a revisão apenas diz que “não foi possível avaliar o viés de publicação”, sem nada disso.</p>`},
+  {id:'m4',q:'Se fez análise de subgrupo, comparou os subgrupos entre si?',h:'Procure o teste de diferença entre subgrupos (“test for subgroup differences” ou p de interação), e não só a significância de cada subgrupo.',na:'Não analisou subgrupos',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> os subgrupos foram comparados entre si e a interpretação bate com o teste.</div><div><span class="wk pb">Problema</span> conclusão sobre diferença entre subgrupos sem teste, ou contrária ao teste.</div><div><span class="wk na">Não achei</span> fez subgrupos, mas o teste de diferença não é relatado.</div></div>',x:`<p style="margin:2px 0 6px">Um subgrupo com resultado significativo e outro sem, ou um efeito que parece maior num grupo, não prova que os grupos sejam diferentes. Para isso é preciso um teste que compare os grupos entre si.</p>
+<p style="margin:0 0 4px"><b>Como conferir:</b></p><ol style="margin:0 0 8px;padding-left:20px">
+<li>No rodapé do forest plot, procure a linha <b>“Test for subgroup differences”</b>. No texto, ela também aparece como <b>“p de interação”</b>.</li>
+<li>Não confunda com o “Test for overall effect” de cada subgrupo: ele só diz se o efeito <i>dentro</i> daquele grupo é diferente de zero.</li>
+<li>Se o teste de diferença tiver <b>p ≥ 0,05</b>, não há evidência de que os grupos sejam diferentes.</li>
+<li>Confira se o <b>texto</b> da revisão diz o mesmo que o gráfico. Já houve revisão que descreveu como “diferença significativa” um teste com p = 0,08.</li>
+<li>Desconfie de subgrupos com poucos estudos, ou em que um único estudo puxa o resultado.</li></ol>${SGFIG}`}]},
+ {t:'Interpretação',w:'tabela de certeza, discussão e conclusão',it:[
+  {id:'i1',q:'A revisão avaliou a certeza da evidência, e os julgamentos fazem sentido?',h:'Procure a tabela “Summary of findings” ou “certainty of evidence”. Ter GRADE não garante que o julgamento esteja correto.',
+   x:`<p style="margin:2px 0 6px">O sistema mais usado é o <b>GRADE</b>, que classifica a certeza em <b>alta, moderada, baixa ou muito baixa</b>, para cada desfecho. Marque <b>Não achei</b> se a revisão não avaliou a certeza.</p>
+<div class="dica" style="margin:6px 0 10px"><b>Atenção:</b> relatar que usou o GRADE não significa que os julgamentos estejam corretos. Confira domínio por domínio.</div>
+<p style="margin:0 0 4px"><b>Como conferir:</b></p><ol style="margin:0 0 8px;padding-left:20px">
+<li><b>Certeza em qual efeito?</b> A tabela deve mostrar, para cada desfecho, o efeito e o intervalo de confiança avaliados. Sem um efeito, a nota não tem base.</li>
+<li><b>Os cinco domínios aparecem, cada um com justificativa?</b></li>
+<li><b>Os mesmos critérios foram aplicados a todos os desfechos?</b> Se os mesmos estudos têm o mesmo problema em vários desfechos, o rebaixamento deve se repetir. Um domínio rebaixado num desfecho e não em outro, sem explicação, indica julgamento arbitrário.</li></ol>
+${GRADEG}`},
+  {id:'i2',q:'A revisão traduz o efeito para uma medida compreensível e discute a relevância clínica?',h:'O resultado aparece numa unidade que dá para explicar ao paciente (minutos, pontos da escala) e é comparado com a diferença mínima clinicamente importante (MCID)?',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> efeito traduzido para uma unidade compreensível e relevância clínica discutida.</div><div><span class="wk pb">Problema</span> efeito apresentado só como SMD ou valor de p, sem tradução nem discussão de relevância.</div><div><span class="wk na">Não achei</span> o tamanho do efeito não é apresentado.</div></div>',x:'Marque <b>Problema</b> se a revisão apresenta apenas a SMD (diferença média padronizada) ou só o valor de p, sem traduzir o efeito nem discutir se ele importa para o paciente. Se o efeito é ou não relevante é um julgamento seu, que você pode fazer com os passos abaixo:'+EFGUIDE+'<p style="margin:8px 0 0">Um intervalo de confiança amplo é como perguntar o preço da carne e ouvir “entre 10 e 99 reais”: não ajuda a decidir.</p>'},
+  {id:'i3',c:1,jd:1,q:'A conclusão é proporcional ao que os dados mostram?',h:'Leia a conclusão do resumo e a da discussão.',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> conclusão proporcional ao efeito, à certeza e às limitações.</div><div><span class="wk pb">Problema</span> conclusão mais otimista que os dados (ignora certeza baixa, apoia-se só no valor de p, destaca desfecho secundário).</div><div><span class="wk sa">Não sei avaliar</span> quando não dá para julgar com o que o artigo mostra.</div></div>',x:'Desconfie se a conclusão ignora o risco de viés ou a certeza baixa, se apoia só em “estatisticamente significativo”, destaca um desfecho secundário ou um subgrupo quando o principal não deu resultado, ou se baseia em estudos de baixa qualidade.'},
+  {id:'i4',q:'Há interesses que podem pesar no resultado?',h:'Quem financiou e quem conduziu os estudos e a revisão?',
+   w:'<div class="wm"><b>Como marcar</b><div><span class="wk ok">OK</span> financiamento e conflitos declarados, sem participação de interessados na condução.</div><div><span class="wk pb">Problema</span> empresa interessada participou da condução ou da análise, ou há conflitos relevantes.</div><div><span class="wk na">Não achei</span> financiamento e conflitos não declarados.</div></div>',x:'Financiamento da indústria não invalida um estudo, mas a participação da empresa na condução ou na análise é um alerta. Considere também conflitos não financeiros, como pesquisadores muito ligados a uma tese.'}]}];
+const QALL=QS.flatMap(x=>x.it);
+const R={a:{},smd:'',dp:'',dmi:'',op:{},col:{}};
+const QV={ok:['OK','p-sim'],pb:['Problema','p-nao'],na:['Não achei','p-par'],ns:['Não se aplica','p-na'],sa:['A conferir','p-na']};
+const MA=['m1','m2','m3'];
+function nsShow(it){if(!it.na)return false;if(it.id=='r2')return ['pb','na'].includes(R.a.r1);if(it.id=='v2')return ['pb','na'].includes(R.a.v1);return true}
+const VISQ=`<div class="vis" style="margin-top:8px">
+<div class="ex"><div class="tt">O mesmo placebo usado duas vezes <span class="bad">problema</span></div>
+<div class="row"><span class="lb2">Estudo A (5 g)</span><span class="chipg">creatina 20</span><span class="chipg pl">placebo 20</span></div>
+<div class="row"><span class="lb2">Estudo A (20 g)</span><span class="chipg">creatina 20</span><span class="chipg rep">placebo 20</span></div>
+<div class="cnt"><span class="f">Parece: <b>80</b> pessoas</span><span class="r">Na verdade: <b>60</b></span></div></div>
+<div class="ex"><div class="tt">Subgrupos com pessoas diferentes <span class="ok">ok</span></div>
+<div class="row"><span class="lb2">Estudo C (homens)</span><span class="chipg">creatina 12</span><span class="chipg pl">placebo 12</span></div>
+<div class="row"><span class="lb2">Estudo C (mulheres)</span><span class="chipg">creatina 10</span><span class="chipg pl">placebo 10</span></div>
+<div class="cnt"><span class="r">Parece: <b>44</b> · Na verdade: <b>44</b> ✓</span></div></div></div>`;
+function qCalc(){const o=$('#qout');if(!o)return;const a=num(R.smd),b=num(R.dp),m=num(R.dmi);
+ if(a==null||b==null){o.innerHTML='Preencha a SMD e o desvio-padrão.';return}
+ const d=Math.abs(a*b);let t=`Diferença aproximada: <b>${d.toFixed(1).replace('.',',')} pontos</b> na escala.`;
+ if(m!=null&&m>0)t+=d>=m?`<br>Atinge a diferença mínima importante (${String(m).replace('.',',')}).`:`<br>Fica abaixo da diferença mínima importante (${String(m).replace('.',',')}): pode não ser perceptível para o paciente.`;o.innerHTML=t;}
+function renderQuick(){const c=$('#quick');c.style.minHeight=c.offsetHeight+'px';
+ let h=`<span class="tag">Roteiro de leitura · adaptado do AMSTAR 2</span><h2>Abra o artigo e siga a ordem</h2><p class="why">Os itens com ★ são os pontos críticos do AMSTAR 2. Não é a classificação formal: para isso, use a aba AMSTAR 2: itens críticos.</p>`;
+ h+=`<div class="colall"><button id="qcolall">${QS.every((x,i)=>R.col[i])?'Expandir tudo':'Recolher tudo'}</button></div>`;
+ let n=0;QS.forEach((sec,si)=>{const an=sec.it.filter(it=>R.a[it.id]).length,np=sec.it.filter(it=>['pb','na'].includes(R.a[it.id])).length,col=!!R.col[si];
+  h+=`<div class="sec${col?' col':''}"><button class="sect" data-si="${si}"><span class="sl"><span class="chev">${col?'▸':'▾'}</span>${sec.t}</span><span class="sr">${np?`<span class="sp">${np} problema${np>1?'s':''}</span>`:''}${an}/${sec.it.length} · ${sec.w}</span></button><div class="secb">`;
+  sec.it.forEach(it=>{n++;const v=R.a[it.id];h+=`<div class="qi"><div class="qh"><span class="qn${it.c?' cr':''}">${n}</span><div><div class="qt">${it.c?'<span class="star">★</span> ':''}${it.q}</div><div class="qo">${it.h}</div></div></div>
+   <details class="ind ex2" data-k="x_${it.id}"${R.op['x_'+it.id]?' open':''}><summary>Entenda</summary><div class="in">${it.w||''}${it.x}</div></details>
+   <div class="seg">${(it.jd?[['ok','OK'],['pb','Problema'],['sa','Não sei avaliar']]:[['ok','OK'],['pb','Problema'],['na','Não achei']]).map(([k,t])=>`<button data-id="${it.id}" data-v="${k}" class="${v==k?'s3-'+k:''}">${t}</button>`).join('')}${nsShow(it)?`<button data-id="${it.id}" data-v="ns" class="${v=='ns'?'s3-ns':''}">${it.na}</button>`:''}</div>
+   ${it.vis?`<details class="ind" data-k="vis"${R.op.vis?' open':''}><summary>Ver exemplo do N inflado</summary><div class="in">${VISQ}</div></details>`:''}
+</div>`});
+  h+='</div></div>'});
+ const pb=QALL.filter(it=>['pb','na'].includes(R.a[it.id])),cr=pb.filter(it=>it.c),sa=QALL.filter(it=>R.a[it.id]=='sa'),done=QALL.filter(it=>R.a[it.id]).length,T=QALL.length,crAll=QALL.filter(it=>it.c).every(it=>R.a[it.id]);
+ let cor='var(--mu)',v='Siga o roteiro',p=`${done} de ${T} pontos marcados.`;
+ if(cr.length>=2){cor='var(--mg)';v='🔴 Desconfie';p=`${cr.length} problemas em pontos críticos (★). Não use esta revisão como base sem uma avaliação completa.`}
+ else if(pb.length){cor='var(--am2)';v='🟡 Atenção';p=`${pb.length} ponto(s) com problema ou não encontrado(s)${cr.length?', 1 deles crítico':''}.${done<T?` ${done} de ${T} marcados.`:''}`}
+ else if(crAll){cor='var(--vd)';v='🟢 Sem problemas à primeira vista';p=(sa.length?`Nenhum problema encontrado. ${sa.length} ponto(s) ficaram para conferir.`:'Nenhum problema encontrado.')+(done<T?` ${done} de ${T} marcados.`:'')+' Para uma classificação formal, use a aba AMSTAR 2: itens críticos.'}
+ const grp=QS.map(sec=>({t:sec.t,l:sec.it.filter(it=>['pb','na','sa'].includes(R.a[it.id]))})).filter(g=>g.l.length);
+ h+=`<div class="qres"><div class="res" style="background:${cor}"><div class="k">Roteiro de leitura</div><div class="v">${v}</div><p>${p}</p></div>
+  ${grp.map(g=>`<h3>${g.t}</h3><ul class="lst">${g.l.map(it=>`<li><span class="pill ${QV[R.a[it.id]][1]}">${QV[R.a[it.id]][0]}</span><span>${it.c?'★ ':''}${it.q}</span></li>`).join('')}</ul>`).join('')}
+  <div class="note">Regra: 2 ou mais problemas em pontos críticos (★) = desconfie · qualquer problema ou “não achei” = atenção · nenhum problema e todos os ★ respondidos = sem problemas à primeira vista. “Não se aplica” e “Não sei avaliar” não pesam; os pontos “a conferir” aparecem na lista. “Não achei” pesa como problema: informação ausente no artigo não pode ser conferida.</div>
+  <div class="nav"><button class="btn sec" id="qz">Limpar</button><span><button class="btn sec" id="qcp">Copiar resumo</button><button class="btn pri" id="qfull">AMSTAR 2: itens críticos</button></span></div><div id="qok" class="note"></div></div>`;
+ c.innerHTML=h;
+ c.querySelectorAll('.seg button[data-id]').forEach(b=>b.onclick=()=>{const id=b.dataset.id,nv=R.a[id]==b.dataset.v?undefined:b.dataset.v;R.a[id]=nv;
+  if(id=='r1'&&!['pb','na'].includes(nv)&&R.a.r2=='ns')delete R.a.r2;
+  if(id=='v1'&&!['pb','na'].includes(nv)&&R.a.v2=='ns')delete R.a.v2;
+  if(MA.includes(id)){if(nv=='ns')MA.forEach(k=>R.a[k]='ns');else MA.forEach(k=>{if(k!=id&&R.a[k]=='ns')delete R.a[k]})}
+  renderQuick()});
+ c.querySelectorAll('.sect[data-si]').forEach(b=>b.onclick=()=>{const i=+b.dataset.si;R.col[i]=!R.col[i];renderQuick()});
+ $('#qcolall').onclick=()=>{const all=QS.every((x,i)=>R.col[i]);QS.forEach((x,i)=>R.col[i]=!all);renderQuick()};
+ c.querySelectorAll('details.ind').forEach(d=>{if(R.op[d.dataset.k])d.open=true;d.addEventListener('toggle',()=>{R.op[d.dataset.k]=d.open})});
+ hydrateG(c);
+
+ $('#qz').onclick=()=>{R.a={};R.smd=R.dp=R.dmi='';renderQuick();try{$('#tabs').scrollIntoView({block:'start'})}catch(e){}};
+ $('#qfull').onclick=()=>setMode('c');
+ $('#qcp').onclick=async()=>{const t=['Roteiro de leitura (adaptado do AMSTAR 2)',`Resultado: ${v.replace(/^\S+ /,'')}`,...QS.flatMap(sec=>[sec.t+':',...sec.it.map(it=>`• ${it.c?'★ ':''}${it.q} ${(QV[R.a[it.id]]||['—'])[0]}`)])].join('\n');
+  try{await navigator.clipboard.writeText(t);$('#qok').innerHTML='<span class="copied">Resumo copiado.</span>'}catch(e){$('#qok').textContent='Não foi possível copiar aqui.'}};
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{c.style.minHeight=''}));}
+function setMode(m){document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.m==m));
+ $('#vq').style.display=m=='r'?'':'none';$('#vc').style.display=m=='c'?'':'none';if(m=='r')renderQuick();else render();try{$('#tabs').scrollIntoView({block:'start'})}catch(e){}}
+function render(){const c=$('#card');c.style.minHeight=c.offsetHeight+'px';render_();
+ hydrateG(c);
+ c.querySelectorAll('details').forEach((d,i)=>{const k=cur+':'+i;if(S.op[k])d.open=true;d.addEventListener('toggle',()=>{S.op[k]=d.open})});
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{c.style.minHeight=''}));}
+function go(n){cur=n;render();try{$('#bar').scrollIntoView({block:'start'})}catch(e){}}
+function render_(){bar();const st=STEPS[cur],c=$('#card');
+ if(st.kind=='intro'){
+  const T=[{v:'int',t:'Intervenção',s:'Tratamento, suplemento, prevenção, terapia'},{v:'diag',t:'Teste diagnóstico'},{v:'rede',t:'Metanálise em rede'},{v:'esc',t:'Revisão de escopo'},{v:'ipd',t:'Dados individuais de pacientes (IPD)'}];
+  const D=[{v:'ecr',t:'Só ensaios randomizados'},{v:'nrsi',t:'Só estudos não randomizados',s:'Coortes, caso-controle, transversais…'},{v:'amb',t:'Os dois tipos'}];
+  c.innerHTML=`<span class="tag">Antes de começar</span><h2>Que revisão você vai avaliar?</h2>
+  <p class="why">O AMSTAR 2 foi feito para revisões de intervenção, com estudos randomizados, não randomizados ou ambos.</p>
+  <label class="lb">Título ou referência (opcional)</label><input type="text" id="tit" value="${esc(S.titulo)}" placeholder="Ex.: Cheah et al., 2021 — ashwagandha e sono">
+  <label class="lb">Tipo de revisão</label><div class="opts" id="ot">${T.map(o=>optHTML(o,S.tipo==o.v)).join('')}</div>
+  ${S.tipo&&S.tipo!='int'?`<div class="warn"><b>Atenção:</b> o AMSTAR 2 não foi desenhado para este tipo de revisão. Você pode seguir para treinar o olhar, mas a classificação final não vale para ela.</div>`:''}
+  <label class="lb">Que estudos ela incluiu?</label><div class="opts" id="od">${D.map(o=>optHTML(o,S.des==o.v)).join('')}</div>
+  <div class="nav"><span></span><button class="btn pri" id="nx" ${S.tipo&&S.des?'':'disabled'}>Começar</button></div>`;
+  $('#tit').oninput=e=>S.titulo=e.target.value;
+  $('#ot').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{S.tipo=b.dataset.v;render()});
+  $('#od').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{S.des=b.dataset.v;render()});
+  wire();return;}
+ if(st.kind=='fim'){fim(c);return;}
+ if(st.kind=='alert'){
+  c.innerHTML=`<span class="tag al">Sinais de alerta</span><h2>Você notou algum destes problemas?</h2>
+  <p class="why">Marque os que aparecem no artigo. Eles não mudam a classificação do AMSTAR 2, mas pesam na sua leitura e entram no resumo.</p>
+  ${ALERTAS.map(([k,t,s])=>chkHTML(k,t,s,S.al.has(k),'al')).join('')}${nav(true)}`;
+  c.querySelectorAll('.chk').forEach(b=>b.onclick=()=>{const k=b.dataset.k;S.al.has(k)?S.al.delete(k):S.al.add(k);render()});wire();return;}
+ if(st.kind=='meta'){renderMeta(st,c);return;}
+ if(st.kind=='grade'){renderGrade(c);return;}
+ if(st.kind=='chk'){const cs=cset(st.id),gs=st.groupsFn?st.groupsFn():st.groups;
+  c.innerHTML=head(st)+(st.groupsFn||st.dica?'':'')+gs.map(g=>`<div class="grp"><h4>${g.t}${g.sub?` <span>· ${g.sub}</span>`:''}</h4>${g.items.map(([k,t,s])=>chkHTML(k,t,s,cs.has(k))).join('')}</div>`).join('')
+   +`<div class="calc">Resposta calculada: ${pill(st.calc(cs))}</div><div class="note">Nada marcado conta como “não”: informação ausente no artigo vale como não feita.</div>`+invHTML(st)+nav(true)+`<div class="note">Item ${st.n} do AMSTAR 2.</div>`;
+  c.querySelectorAll('.chk').forEach(b=>b.onclick=()=>{const k=b.dataset.k;cs.has(k)?cs.delete(k):cs.add(k);render()});wireInv(c);wire();return;}
+ const a=S.ans[st.id];
+ c.innerHTML=head(st)+(st.sim?`<details><summary>O que conta como “sim”</summary><div class="in"><ul>${st.sim.map(x=>`<li>${x}</li>`).join('')}</ul></div></details>`:'')
+  +`<div class="opts">${st.opts.map(o=>optHTML(o,a==o.v)).join('')}</div>`+invHTML(st)+nav(!!a,cur==STEPS.length-2?'Ver resultado':'')+(st.n?`<div class="note">Item ${st.n} do AMSTAR 2.</div>`:'');
+ c.querySelectorAll('.opts .opt').forEach(b=>b.onclick=()=>{S.ans[st.id]=b.dataset.v;render()});wireInv(c);wire();}
+function fim(c){
+ const falhas=CRIT.filter(s=>['nao','ne'].includes(resp(s)));const parc=CRIT.filter(s=>resp(s)=='par');
+ let cor,v,p;
+ if(falhas.length==0){cor='var(--vd)';v='Sem falha crítica';p='Nos domínios críticos, a revisão se sustenta. A classificação final (alta ou moderada) depende dos 9 itens não críticos do AMSTAR 2, que esta aba não avalia.';}
+ else if(falhas.length==1){cor='var(--am2)';v='Confiança baixa';p='Há 1 falha crítica. A revisão pode não oferecer um resumo preciso e completo dos estudos disponíveis.';}
+ else{cor='var(--mg)';v='Confiança criticamente baixa';p=`Há ${falhas.length} falhas críticas. Segundo o AMSTAR 2, não se deve confiar nesta revisão para um resumo preciso e completo dos estudos.`;}
+ const al=[...autoAlerts(),...ALERTAS.filter(([k])=>S.al.has(k))];
+ const apN=AP.filter(s=>S.ans[s.id]=='nao').length,apI=AP.filter(s=>S.ans[s.id]=='inc').length;
+ const apTxt=apN?'Mesmo que a revisão seja confiável, há pontos em que ela não se aplica bem ao seu paciente.':apI?'Aplicabilidade incerta em alguns pontos: pese isso na decisão.':'A revisão parece se aplicar ao seu paciente.';
+ const row=s=>`<li>${pill(resp(s))}<span>${s.q}</span></li>`;
+ c.innerHTML=`<span class="tag">Resultado</span>${S.titulo?`<h2>${esc(S.titulo)}</h2>`:''}
+  ${S.tipo!='int'?`<div class="warn" style="margin:8px 0 14px"><b>Atenção:</b> o AMSTAR 2 não foi feito para este tipo de revisão. Use o resultado só como exercício.</div>`:''}
+  <div class="res" style="background:${cor}"><div class="k">Domínios críticos do AMSTAR 2</div><div class="v">${v}</div><p>${p}</p></div>
+  ${parc.length?`<div class="note" style="margin:-6px 0 10px">“Sim, parcial” não conta como falha crítica, mas indica pontos a conferir.</div>`:''}
+  <h3>Os 7 domínios críticos</h3><ul class="lst">${CRIT.map(row).join('')}</ul>
+  <h3>Sinais de alerta</h3>${al.length?`<ul class="lst">${al.map(([k,t])=>`<li><span class="pill p-par">Alerta</span><span>${t}</span></li>`).join('')}</ul>`:'<p class="why" style="margin:0">Nenhum sinal de alerta marcado.</p>'}
+  <h3>Serve para o meu paciente?</h3><p class="why" style="margin:0 0 4px">${apTxt}</p><ul class="lst">${AP.map(row).join('')}</ul>
+  <div class="note">O AMSTAR 2 não usa nota: somar itens pode esconder uma falha crítica. Sinais de alerta e aplicabilidade são julgamentos à parte e não mudam a classificação.</div>
+  <div class="nav"><button class="btn sec" id="bk">Voltar</button><span><button class="btn sec" id="cp">Copiar resumo</button><button class="btn pri" id="rs">Nova avaliação</button></span></div><div id="ok" class="note"></div>`;
+ $('#bk').onclick=()=>go(cur-1);
+ $('#rs').onclick=()=>{S.tipo=null;S.des=null;S.titulo='';S.ans={};S.chk={};S.al=new Set();S.m={};S.iv={};S.op={};S.g={};go(0)};
+ $('#cp').onclick=async()=>{const t=[`Avaliação rápida (AMSTAR 2, domínios críticos)${S.titulo?' — '+S.titulo:''}`,`Resultado: ${v}`,...CRIT.map(s=>`• ${s.q} ${(LAB[resp(s)]||['—'])[0]}`),'Sinais de alerta:',...(al.length?al.map(([k,t])=>`• ${t}`):['• nenhum']),'Aplicabilidade:',...AP.map(s=>`• ${s.q} ${(LAB[S.ans[s.id]]||['—'])[0]}`)].join('\n');
+  try{await navigator.clipboard.writeText(t);$('#ok').innerHTML='<span class="copied">Resumo copiado.</span>'}catch(e){$('#ok').textContent='Não foi possível copiar aqui.'}};}
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
+renderQuick();render();
+</script>
+</body>
+</html>
