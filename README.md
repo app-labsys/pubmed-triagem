@@ -2,4 +2,4 @@
 
 Extensão do Chrome que organiza resultados do PubMed por nível de evidência, com regras fixas e visíveis.
 
-Política de privacidade: https://SEU-USUARIO.github.io/NOME-DO-REPOSITORIO/
+Política de privacidade: https://app-labsys.github.io/pubmed-triagem/
