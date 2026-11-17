@@ -776,5 +776,57 @@ function fim(c){
 document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
 renderQuick();render();
 </script>
+<script>
+/* Ponte com a extensão Triagem PubMed: só age quando a página está dentro do painel da extensão (em quadro).
+   Fora disso (aba normal) não faz nada. Guarda o estado S e o passo atual (cur); a extensão salva por PMID. */
+(function () {
+  if (window.parent === window) return;
+  var okOrigin = function (o) { return o === 'https://pubmed.ncbi.nlm.nih.gov' || /^chrome-extension:\/\//.test(o); };
+  var loaded = false, timer = null, note = null;
+  function post(m) { try { window.parent.postMessage(m, '*'); } catch (e) {} }
+  function toast(txt) {
+    if (!note) {
+      note = document.createElement('div');
+      note.style.cssText = 'position:fixed;right:10px;bottom:10px;background:#1f6b46;color:#fff;font:600 12px/1 sans-serif;padding:7px 10px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:99999';
+      document.body.appendChild(note);
+    }
+    note.textContent = txt; note.style.opacity = '1';
+    clearTimeout(note._t); note._t = setTimeout(function () { note.style.opacity = '0'; }, 1400);
+  }
+  function snapshot() { return { S: JSON.parse(JSON.stringify(S)), cur: cur }; }
+  function summary() { var n = Object.keys(S.ans || {}).length + Object.keys(S.chk || {}).length + Object.keys(S.m || {}).length; return n ? n + (n === 1 ? ' item respondido' : ' itens respondidos') : ''; }
+  function scheduleSave() {
+    if (!loaded) return;
+    clearTimeout(timer);
+    timer = setTimeout(function () { post({ type: 'amstar:save', data: snapshot(), summary: summary() }); }, 400);
+  }
+  /* toda resposta chama render()/renderQuick(): é aí que salvamos */
+  ['render', 'renderQuick'].forEach(function (name) {
+    var f0 = window[name];
+    if (typeof f0 !== 'function') return;
+    window[name] = function () { var r = f0.apply(this, arguments); scheduleSave(); return r; };
+  });
+  window.addEventListener('message', function (e) {
+    if (!okOrigin(e.origin) || e.source !== window.parent) return;
+    var m = e.data;
+    if (!m || typeof m !== 'object') return;
+    if (m.type === 'amstar:load') {
+      if (m.data && m.data.S && typeof m.data.S === 'object') {
+        try {
+          Object.keys(S).forEach(function (k) { if (m.data.S[k] !== undefined) S[k] = m.data.S[k]; });
+          if (typeof m.data.cur === 'number') cur = m.data.cur;
+          loaded = true; render();
+          toast('Respostas anteriores restauradas');
+          return;
+        } catch (err) {}
+      }
+      loaded = true;
+    } else if (m.type === 'amstar:saved') {
+      toast('Salvo na extensão');
+    }
+  });
+  post({ type: 'amstar:ready' });
+})();
+</script>
 </body>
 </html>
