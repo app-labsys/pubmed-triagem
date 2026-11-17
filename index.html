@@ -58,11 +58,18 @@ footer{margin-top:28px;color:var(--mut);font-size:14px}
 <h2>Dados de revistas</h2>
 <p>O quartil das revistas vem de uma tabela do JCR (Clarivate) que acompanha a extensão. Ela não depende de nenhuma consulta sobre você.</p>
 
+<h2>Ferramenta AMSTAR 2</h2>
+<p>A ferramenta “Essa revisão é confiável?” é uma página externa (<code>app-labsys.github.io/pubmed-triagem/amstar/</code>) que a extensão abre dentro do seu painel ou no painel lateral do Chrome. A página não faz consultas a servidores nem envia as suas marcações a ninguém. As marcações são guardadas só no seu navegador, por artigo: pelo PMID ou DOI e, se o artigo não puder ser identificado, pelo endereço da página (sem parâmetros). Ao abrir o painel lateral, a extensão lê o endereço da aba e, se faltar, o DOI e o PMID que a própria página declara nos seus metadados; o DOI pode ser enviado ao PubMed (NCBI) para encontrar o PMID.</p>
+
 <h2>Permissões</h2>
 <ul>
 <li><code>storage</code>: guardar configurações, decisões e cache localmente.</li>
 <li>Acesso a <code>eutils.ncbi.nlm.nih.gov</code> e <code>icite.od.nih.gov</code>: consultar os dados dos artigos descritos acima.</li>
+<li>Acesso a <code>clinicaltrials.gov</code>: só para o artigo que você abre para ler (ou quando você toca em “Conferir datas”), o número NCT desse artigo é enviado ao ClinicalTrials.gov para ler as datas de registro e de início do estudo. A lista de resultados não é consultada. Do registro são lidos também o desfecho principal e o prazo de medição, que ficam salvos só no seu navegador, junto com a sua marcação “igual/diferente” do desfecho. O resultado (datas e título do estudo) fica salvo só no seu navegador, para o aviso de “registro retrospectivo” aparecer nas próximas vezes. Ao usar “Procurar registro na revista”, o PMID é enviado ao PubMed (NCBI) para obter o DOI, e o artigo abre em outra aba com um selo “REG” no ícone.</li>
+<li><code>sidePanel</code>: abrir a ferramenta AMSTAR 2 ao lado da página que você está lendo, só quando você pede (atalho Alt+Shift+A ou botão do ícone da extensão).</li>
 <li>Execução em <code>pubmed.ncbi.nlm.nih.gov</code>: mostrar a triagem nas páginas de resultados e de artigo.</li>
+<li><code>activeTab</code> e <code>scripting</code>: quando você clica no ícone da extensão, ler o texto da aba atual para procurar números de registro de ensaios (ex.: NCT, CTRI, PROSPERO). A leitura acontece só nessa aba, só nesse momento, e o texto da página não é guardado nem enviado a ninguém. Se achar um único número de registro e identificar o artigo, só esse número (com o site e a data) é salvo localmente no seu navegador, para aparecer no campo Registro. Se o artigo só tiver DOI, o DOI é enviado ao PubMed (NCBI) para achar o PMID.</li>
+<li>Acesso opcional a sites de revistas (<code>optional_host_permissions</code>): só se você ativar o “aviso automático” em um site pelo ícone da extensão, e só para aquele site (o Chrome pede a sua confirmação). Nesses sites, a extensão lê páginas de artigos científicos para avisar, com um selo no ícone, quando o texto citar um número de registro. A leitura é feita no seu navegador, o texto não é guardado nem enviado, e você pode desativar a qualquer momento pelo ícone ou pelas Opções.</li>
 </ul>
 
 <h2>Aviso</h2>
@@ -110,11 +117,18 @@ footer{margin-top:28px;color:var(--mut);font-size:14px}
 <h2>Journal data</h2>
 <p>Journal quartiles come from a JCR (Clarivate) table bundled with the extension. It involves no lookup about you.</p>
 
+<h2>AMSTAR 2 tool</h2>
+<p>The “Is this review reliable?” tool is an external page (<code>app-labsys.github.io/pubmed-triagem/amstar/</code>) that the extension opens inside its panel or in Chrome’s side panel. The page makes no server requests and sends your answers to no one. Answers are kept only in your browser, per article: by PMID or DOI and, if the article cannot be identified, by the page address (without parameters). When you open the side panel, the extension reads the tab address and, if needed, the DOI and PMID that the page itself declares in its metadata; the DOI may be sent to PubMed (NCBI) to find the PMID.</p>
+
 <h2>Permissions</h2>
 <ul>
 <li><code>storage</code>: keep settings, decisions and cache locally.</li>
 <li>Access to <code>eutils.ncbi.nlm.nih.gov</code> and <code>icite.od.nih.gov</code>: fetch the article data described above.</li>
+<li>Access to <code>clinicaltrials.gov</code>: only for the article you open to read (or when you tap “Conferir datas”), that article’s NCT number is sent to ClinicalTrials.gov to read the registration and start dates. The results list is not queried. The primary outcome and its time frame are also read from the registry and saved only in your browser, together with your “same/different” mark for the outcome. The result (dates and study title) is saved only in your browser, so the “retrospective registration” notice appears next time. When you use “Procurar registro na revista” (look for the registration on the journal’s page), the PMID is sent to PubMed (NCBI) to get the DOI, and the article opens in a new tab with a “REG” badge on the icon.</li>
+<li><code>sidePanel</code>: open the AMSTAR 2 tool beside the page you are reading, only when you ask (Alt+Shift+A shortcut or the extension icon button).</li>
 <li>Running on <code>pubmed.ncbi.nlm.nih.gov</code>: display the triage on results and article pages.</li>
+<li><code>activeTab</code> and <code>scripting</code>: when you click the extension icon, read the text of the current tab to look for trial registration numbers (e.g., NCT, CTRI, PROSPERO). Reading happens only on that tab, only at that moment, and the page text is neither stored nor sent anywhere. If exactly one registration number is found and the article is identified, only that number (with the site and date) is saved locally in your browser to fill the Registro field. If the article only has a DOI, the DOI is sent to PubMed (NCBI) to find the PMID.</li>
+<li>Optional access to journal sites (<code>optional_host_permissions</code>): only if you turn on the “automatic notice” for a site from the extension icon, and only for that site (Chrome asks you to confirm). On those sites the extension reads scientific article pages to show a badge on the icon when the text cites a registration number. Reading happens in your browser, the text is neither stored nor sent, and you can turn it off at any time from the icon or the Options page.</li>
 </ul>
 
 <h2>Disclaimer</h2>
