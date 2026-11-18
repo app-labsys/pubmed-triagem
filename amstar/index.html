@@ -233,11 +233,73 @@ details.gd.ind{margin:8px 0}details.gd .in{padding:2px 8px 10px}details.ex2 deta
 .sml{font-weight:800;font-size:12.5px;color:var(--am);margin:10px 0 5px}.srow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px;border-top:1px solid var(--ln);padding-top:6px;font-size:13px}.srow>span:first-child{font-weight:700;min-width:130px}
 .sres{display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px;margin:12px 0 4px}.stars{white-space:nowrap}.stars span{font-size:30px;color:#E6D9DE;display:inline-block;transition:color .45s,transform .45s}.stars span.on{color:var(--am2);transform:scale(1.08)}.slv{font-weight:800;color:var(--am);font-size:15px}
 .snote{font-size:12.5px;color:var(--mu)}.sback{margin-top:8px;background:#FFF6E6;border-left:4px solid var(--am2);border-radius:8px;padding:8px 10px;font-size:13px;line-height:1.45;animation:gfl2 .5s}@keyframes gfl2{from{opacity:0}to{opacity:1}}
+@font-face{font-family:'IP Serif';font-weight:600;src:url(fonts/serif-600.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'IP Sans';font-weight:400;src:url(fonts/sans-400.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'IP Sans';font-weight:500;src:url(fonts/sans-500.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'IP Sans';font-weight:600;src:url(fonts/sans-600.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'IP Mono';font-weight:400;src:url(fonts/mono-400.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'IP Mono';font-weight:500;src:url(fonts/mono-500.woff2) format('woff2');font-display:swap}
+:root{--am:#410230;--vi:#8C1535;--mg:#8C1535;--ci:#F1EBE8;--tx:#410230;--mu:#7d5a6c;--ln:#dcd0cf;--vd:#410230;--am2:#7d5a6c;--ring:0 0 0 3px rgba(214,40,57,.3);--sf:#F7F3F1;--tint:#EBD3D7;--v08:#e7dedc;--serif:'IP Serif','Source Serif 4',Georgia,serif;--sans:'IP Sans',Inter,-apple-system,'Segoe UI',sans-serif;--mono:'IP Mono','IBM Plex Mono',Menlo,Consolas,monospace}
+body{font-family:var(--sans);font-weight:400;line-height:1.4}
+button,input,summary{font-family:var(--sans)}
+.wmk{font:600 24px/1 var(--serif);letter-spacing:-.01em;color:#8C1535}
+h1{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;color:var(--am);margin:14px 0 8px}
+h1 em{font-style:normal;color:#8C1535}
+.lead{font-family:var(--sans);font-style:normal;font-weight:400;font-size:15px;color:var(--mu)}
+.bar span{height:4px;border-radius:2px}.bar span.done{background:var(--am)}.bar span.cur{background:#8C1535}
+.card,.tabs{background:var(--sf);border:1px solid var(--ln);border-radius:8px;box-shadow:none}
+.tabs{padding:0;gap:20px;border:0;border-bottom:1px solid var(--ln);border-radius:0;background:transparent}
+.tabs button{flex:none;border-radius:0;padding:10px 0;margin-bottom:-1px;border-bottom:2px solid transparent;font-weight:500;font-size:14px;color:var(--mu)}
+.tabs button.on{background:transparent;color:var(--am);border-bottom-color:#8C1535}
+.tag,.tag.ap,.tag.al{border-radius:4px;background:var(--tint);color:#8C1535;font:400 11px/1 var(--mono);letter-spacing:.12em;padding:5px 8px}
+h2{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:-.005em;line-height:1.2}
+.why{font-weight:400;color:var(--mu)}
+h3,.grp h4,.res .k,.flg .fl{font-family:var(--mono);font-weight:400;letter-spacing:.14em}
+label.lb,.kc label,.calcx label{font-family:var(--sans);font-weight:500;letter-spacing:0;color:var(--am)}
+h3,.grp h4{font-size:11px;color:var(--mu)}.grp h4 span{font-family:var(--sans)}
+details,.ex,.out,.kout,.wm,.srch,.fp,.fun,table.sgt{background:var(--sf);border:1px solid var(--ln);border-radius:8px}
+summary{font-weight:500;color:var(--am)}details b{color:var(--am)}
+.dica,.warn,.flag,.kwarn,.flg,.qnao,.kpat,.sback{background:var(--tint);border:0;border-left:3px solid #8C1535;border-radius:4px;color:var(--am)}
+.flg.ft{background:var(--v08);border:0;border-left:3px solid var(--mu)}
+.flg .fl,.flg .fl span{color:var(--mu)}.flg button.on{color:var(--am)}.flg button .bx,.kchk .bx{border-color:var(--mu);border-radius:4px}.flg button.on .bx,.kchk.on .bx{background:#8C1535;border-color:#8C1535}
+.opt,.chk{background:var(--sf);border:1px solid var(--ln);border-radius:8px;font-weight:500;font-size:15px;transition:background 120ms cubic-bezier(.2,0,0,1)}
+.opt:hover,.chk:hover{border-color:var(--am);background:var(--v08)}
+.opt.sel,.chk.on{border-color:var(--am);background:var(--tint)}.chk.al.on{border-color:#8C1535;background:var(--tint)}.chk.al.on .box{background:#8C1535;border-color:#8C1535}
+.opt .dot{border-width:2px}.opt small,.chk small{font-weight:400}
+.btn{border-radius:4px;font-weight:500;padding:12px 20px;transition:background 120ms cubic-bezier(.2,0,0,1)}
+.btn.pri{background:#8C1535;color:#F1EBE8}.btn.pri:hover:not(:disabled){background:#6E0F29}
+.btn.sec{border:1px solid var(--am);color:var(--am)}.btn.sec:hover{background:var(--v08)}
+.btn:active{transform:translateY(1px)}
+input[type=text],.calcx input,.kc input{border:1px solid var(--ln);border-radius:4px;background:var(--sf);font-family:var(--mono);font-size:15px}
+input[type=text]:focus,.calcx input:focus,.kc input:focus{outline:0;border-color:var(--am);box-shadow:var(--ring)}
+button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:0;box-shadow:var(--ring)}
+.res{border-radius:8px}.res .k{font-size:11px;opacity:1}
+.res .v{font-family:var(--serif);font-weight:600;font-size:28px;letter-spacing:-.01em}
+.res[style*="--mg"]{background:#D62839!important}
+.pill{border-radius:4px;font:400 11px/1.4 var(--mono);letter-spacing:.06em}
+.p-sim{background:var(--v08);color:var(--am)}.p-par{background:var(--tint);color:#8C1535}.p-nao{background:#8C1535;color:#F1EBE8}.p-na{background:var(--v08);color:var(--mu)}
+.ok{background:var(--v08);color:var(--am)}.bad{background:var(--tint);color:#8C1535}
+.lst li{border-bottom:1px solid var(--ln)}
+.qn{border-radius:4px;background:var(--am);font-family:var(--mono);font-weight:500}.qn.cr{background:#8C1535}
+.qt{font-weight:600}
+.seg button,.mini button,.kb button,.gbt,.colall button,.kadd{border:1px solid var(--ln);border-radius:4px;background:var(--sf);font-weight:500}
+.seg button.s-par,.seg button.s3-na{background:var(--tint);border-color:#8C1535;color:var(--am)}
+.mini button.sel,.kb button.on{background:var(--am);border-color:var(--am);color:#F1EBE8}
+.sect{background:#8C1535;border-radius:4px;font-family:var(--mono);font-weight:400;letter-spacing:.12em}
+.sect .sp{background:var(--tint);color:#8C1535;border-radius:4px;font-family:var(--mono);font-weight:500}
+details.ex2>summary::before{border-radius:4px;background:var(--am)}
+details.ex2 .in,.robc{background:var(--v08)}.robc{border-left-color:#8C1535;border-radius:4px}
+.inv{border:1px solid #8C1535;background:var(--sf)}.inv>summary{color:#8C1535}.inv>summary::before,.inv[open]>summary::before{content:""}
+.vd.ok{background:var(--v08)}.vd.pb{background:var(--tint)}
+.kv.ok{background:var(--v08);color:var(--am)}.kv.bad{background:var(--tint);color:#8C1535}.kv.mid{background:var(--v08);color:var(--mu)}
+.out b,.kd,.kp b{font-family:var(--mono);font-weight:500}
+.foot{color:var(--mu)}.copied{color:var(--am)}
+.star{color:#8C1535}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="kick">Interprete · leitura crítica</div>
+  <div class="wmk">Interprete.</div>
   <h1>Dá pra confiar nessa <em>revisão?</em></h1>
   <p class="lead">Use o roteiro de leitura para uma avaliação rápida.</p>
   <div class="tabs" id="tabs"><button data-m="r" class="on">Roteiro de leitura</button><button data-m="c">AMSTAR 2: itens críticos</button></div>
@@ -688,9 +750,9 @@ function renderQuick(){const c=$('#quick');c.style.minHeight=c.offsetHeight+'px'
   h+='</div></div>'});
  const pb=QALL.filter(it=>['pb','na'].includes(R.a[it.id])),cr=pb.filter(it=>it.c),sa=QALL.filter(it=>R.a[it.id]=='sa'),done=QALL.filter(it=>R.a[it.id]).length,T=QALL.length,crAll=QALL.filter(it=>it.c).every(it=>R.a[it.id]);
  let cor='var(--mu)',v='Siga o roteiro',p=`${done} de ${T} pontos marcados.`;
- if(cr.length>=2){cor='var(--mg)';v='🔴 Desconfie';p=`${cr.length} problemas em pontos críticos (★). Não use esta revisão como base sem uma avaliação completa.`}
- else if(pb.length){cor='var(--am2)';v='🟡 Atenção';p=`${pb.length} ponto(s) com problema ou não encontrado(s)${cr.length?', 1 deles crítico':''}.${done<T?` ${done} de ${T} marcados.`:''}`}
- else if(crAll){cor='var(--vd)';v='🟢 Sem problemas à primeira vista';p=(sa.length?`Nenhum problema encontrado. ${sa.length} ponto(s) ficaram para conferir.`:'Nenhum problema encontrado.')+(done<T?` ${done} de ${T} marcados.`:'')+' Para uma classificação formal, use a aba AMSTAR 2: itens críticos.'}
+ if(cr.length>=2){cor='var(--mg)';v='Desconfie';p=`${cr.length} problemas em pontos críticos (★). Não use esta revisão como base sem uma avaliação completa.`}
+ else if(pb.length){cor='var(--am2)';v='Atenção';p=`${pb.length} ponto(s) com problema ou não encontrado(s)${cr.length?', 1 deles crítico':''}.${done<T?` ${done} de ${T} marcados.`:''}`}
+ else if(crAll){cor='var(--vd)';v='Sem problemas à primeira vista';p=(sa.length?`Nenhum problema encontrado. ${sa.length} ponto(s) ficaram para conferir.`:'Nenhum problema encontrado.')+(done<T?` ${done} de ${T} marcados.`:'')+' Para uma classificação formal, use a aba AMSTAR 2: itens críticos.'}
  const grp=QS.map(sec=>({t:sec.t,l:sec.it.filter(it=>['pb','na','sa'].includes(R.a[it.id]))})).filter(g=>g.l.length);
  h+=`<div class="qres"><div class="res" style="background:${cor}"><div class="k">Roteiro de leitura</div><div class="v">${v}</div><p>${p}</p></div>
   ${grp.map(g=>`<h3>${g.t}</h3><ul class="lst">${g.l.map(it=>`<li><span class="pill ${QV[R.a[it.id]][1]}">${QV[R.a[it.id]][0]}</span><span>${it.c?'★ ':''}${it.q}</span></li>`).join('')}</ul>`).join('')}
